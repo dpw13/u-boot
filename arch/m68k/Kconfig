@@ -56,6 +56,9 @@ config MCF5441x
         select DM_SERIAL
 	bool
 
+config M68K_GENERIC
+	bool
+
 # processor type
 config M5208
 	bool
@@ -109,6 +112,10 @@ config M5373
 config M54418
 	bool
 	select MCF5441x
+
+config TENKON
+	bool
+	select M68K_GENERIC
 
 # peripherals
 config CF_DSPI
@@ -175,6 +182,10 @@ config TARGET_AMCORE
 	bool "Support AMCORE"
 	select M5307
 
+config TARGET_TENKON
+	bool "Support Tenkon"
+	select TENKON
+
 config TARGET_STMARK2
         bool "Support stmark2"
         select CF_DSPI
@@ -197,6 +208,7 @@ source "board/freescale/m5329evb/Kconfig"
 source "board/freescale/m5373evb/Kconfig"
 source "board/sysam/amcore/Kconfig"
 source "board/sysam/stmark2/Kconfig"
+source "board/tenkon/tenkon/Kconfig"
 
 config M68K_QEMU
 	bool "Build with workarounds for incomplete QEMU emulation"

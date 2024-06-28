@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Copyright (C) 2018 Angelo Dureghello <angelo@sysam.it>
+ */
+
+/dts-v1/;
+
+/ {
+	model = "Tenkon";
+	compatible = "tenkon,TENKON";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		uart0: uart@fe000000 {
+			compatible = "fsl,sc26c92";
+			reg = <0xfe000000 0x10>;
+			status = "disabled";
+		};
+
+		uart2: uart@fe400000 {
+			compatible = "fsl,sc26c92";
+			reg = <0xfe400000 0x10>;
+			status = "disabled";
+		};
+    };
+};
+
+&uart0 {
+	bootph-all;
+	status = "okay";
+};
+

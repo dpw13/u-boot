@@ -26,6 +26,20 @@
 #endif
 
 /* ***** CACR ***** */
+#if defined(CONFIG_M68K_GENERIC)
+#define M68K_CACR_EI    (1 << 0)
+#define M68K_CACR_FI    (1 << 1)
+#define M68K_CACR_CEI   (1 << 2)
+#define M68K_CACR_CI    (1 << 3)
+#define M68K_CACR_IBE   (1 << 4)
+#define M68K_CACR_ED    (1 << 8)
+#define M68K_CACR_FD    (1 << 9)
+#define M68K_CACR_CED   (1 << 10)
+#define M68K_CACR_CD    (1 << 11)
+#define M68K_CACR_DBE   (1 << 12)
+#define M68K_CACR_WA    (1 << 13)
+#endif
+
 /* V2 Core */
 #ifdef CFG_CF_V2
 

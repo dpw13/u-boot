@@ -1,0 +1,21 @@
+if TARGET_TENKON
+
+config SYS_CPU
+        string
+        default "m68k"
+
+config SYS_BOARD
+        string
+        default "tenkon"
+
+config SYS_VENDOR
+        string
+        default "tenkon"
+
+config SYS_CONFIG_NAME
+        default "tenkon"
+
+endif
+
+
+

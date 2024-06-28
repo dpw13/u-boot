@@ -118,7 +118,7 @@ unsigned long long get_ticks(void)
 {
 	return get_timer(0);
 }
-#else
+#elif !defined(CONFIG_M68K_GENERIC)
 static u64 timer64 __section(".data");
 static u16 timer16 __section(".data");
 
