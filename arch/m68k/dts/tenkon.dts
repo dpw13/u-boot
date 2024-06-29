@@ -19,13 +19,13 @@
 		#size-cells = <1>;
 
 		uart0: uart@fe000000 {
-			compatible = "fsl,sc26c92";
+			compatible = "phi,sc26c92";
 			reg = <0xfe000000 0x10>;
 			status = "disabled";
 		};
 
 		uart2: uart@fe400000 {
-			compatible = "fsl,sc26c92";
+			compatible = "phi,sc26c92";
 			reg = <0xfe400000 0x10>;
 			status = "disabled";
 		};
