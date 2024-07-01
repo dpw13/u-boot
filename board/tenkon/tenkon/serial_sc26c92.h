@@ -132,6 +132,21 @@ typedef struct {
 #define MR2_DIS_CTS_TX  (0 << 4)
 #define MR2_EN_CTS_TX   (1 << 4)
 
-#define MR2_STOP_LEN_1_00   (7)
+#define MR2_STOP_LEN_0_56   (0x0)
+#define MR2_STOP_LEN_0_63   (0x1)
+#define MR2_STOP_LEN_0_69   (0x2)
+#define MR2_STOP_LEN_0_75   (0x3)
+#define MR2_STOP_LEN_0_81   (0x4)
+#define MR2_STOP_LEN_0_88   (0x5)
+#define MR2_STOP_LEN_0_94   (0x6)
+#define MR2_STOP_LEN_1_00   (0x7)
+#define MR2_STOP_LEN_1_56   (0x8)
+#define MR2_STOP_LEN_1_63   (0x9)
+#define MR2_STOP_LEN_1_69   (0xA)
+#define MR2_STOP_LEN_1_75   (0xB)
+#define MR2_STOP_LEN_1_81   (0xC)
+#define MR2_STOP_LEN_1_88   (0xD)
+#define MR2_STOP_LEN_1_94   (0xE)
+#define MR2_STOP_LEN_2_00   (0xF)
 
 #endif // _SSC26C92_H_

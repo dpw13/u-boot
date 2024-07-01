@@ -3,8 +3,6 @@
 #include <dm/device_compat.h>
 #include "serial_sc26c92.h"
 
-// Use readb/writeb
-
 static inline uart_regs_t* get_uart_regs(void __iomem *base, const struct sc26c92_uart_info *uart_info)
 {
 	duart_regs_t* duart_regs = (duart_regs_t*)base;
@@ -97,8 +95,60 @@ static int sc26c92_serial_setconfig(struct udevice *dev, uint serial_config)
 	uint parity = SERIAL_GET_PARITY(serial_config);
 	uint bits = SERIAL_GET_BITS(serial_config);
 	uint stop = SERIAL_GET_STOP(serial_config);
+	uint8_t data;
 
-	/* TODO: Set MR regs based on above */
+	/* Disable TX and RX when changing settings and reset MR pointer to 1 */
+	uart_regs->CR = CR_CMD_RESET_MR1 | CR_DIS_RX | CR_DIS_TX;
+
+	data = MR1_EN_RX_RTS;
+	switch (parity) {
+		case SERIAL_PAR_NONE:
+			data |= MR1_NO_PARITY;
+			break;
+		case SERIAL_PAR_ODD:
+			data |= MR1_PARITY_ODD;
+			break;
+		case SERIAL_PAR_EVEN:
+			data |= MR1_PARITY_EVEN;
+			break;
+	}
+
+	switch(bits) {
+		case SERIAL_5_BITS:
+			data |= MR1_BPC_5;
+			break;
+		case SERIAL_6_BITS:
+			data |= MR1_BPC_6;
+			break;
+		case SERIAL_7_BITS:
+			data |= MR1_BPC_7;
+			break;
+		case SERIAL_8_BITS:
+			data |= MR1_BPC_8;
+			break;
+	}
+    uart_regs->MR = data;
+
+	data = MR2_DIS_TX_RTS | MR2_DIS_CTS_TX;
+	switch(stop) {
+		case SERIAL_HALF_STOP:
+			/* 0.563 bit times is the lowest supported */
+			data |= MR2_STOP_LEN_0_56;
+			break;
+		case SERIAL_ONE_STOP:
+			data |= MR2_STOP_LEN_1_00;
+			break;
+		case SERIAL_ONE_HALF_STOP:
+			data |= MR2_STOP_LEN_1_56;
+			break;
+		case SERIAL_TWO_STOP:
+			data |= MR2_STOP_LEN_2_00;
+			break;
+	}
+    uart_regs->MR = data;
+
+	/* Re-enable */
+    uart_regs->CR = CR_CMD_NONE | CR_ENA_RX | CR_ENA_TX;
 
 	return 0;
 }
