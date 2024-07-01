@@ -3,7 +3,7 @@
 # (C) Copyright 2000-2004
 # Wolfgang Denk, DENX Software Engineering, wd@denx.de.
 
-# ccflags-y += -DET_DEBUG
+# ccflags-y += -DET_DEBUG -DDEBUG -DLOG_DEBUG
 
 extra-y	= start.o
 obj-y	= cpu.o speed.o cpu_init.o interrupts.o

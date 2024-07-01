@@ -5,14 +5,14 @@
  */
 
 #include <asm-offsets.h>
-#include <config.h>
+#include <system-constants.h>
 #include <asm/cache.h>
 
 #define _START	_start
 #define _FAULT	_fault
 
 #define SAVE_ALL						\
-	move.w	#0x2700,%sr;		/* disable intrs */	\
+	ori		#0x0700,%sr;		/* disable intrs */	\
 	subl	#60,%sp;		/* space for 15 regs */ \
 	moveml	%d0-%d7/%a0-%a6,%sp@;
 
@@ -95,13 +95,15 @@ vector192_255:
 _start:
 	nop
 	nop
-	move.w	#0x2700,%sr		/* Mask off Interrupt */
+	ori #0x0700,%sr		/* Mask off Interrupt */
 
 	/* put relocation table address to a5 */
 	move.l	#__got_start, %a5
 
-	/* setup stack initially on top of internal static ram  */
-	move.l  #(CFG_SYS_INIT_RAM_ADDR + CFG_SYS_INIT_RAM_SIZE), %sp
+	/* setup stack initially on top of internal SRAM */
+	/*move.l  #(CONFIG_SYS_SRAM_BASE + CONFIG_SYS_SRAM_SIZE), %sp*/
+	/*move.l  #(CFG_SYS_INIT_RAM_ADDR + CFG_SYS_INIT_RAM_SIZE), %sp*/
+	move.l  #(SYS_INIT_SP_ADDR), %sp
 
 	/*
 	 * if configured, malloc_f arena will be reserved first,

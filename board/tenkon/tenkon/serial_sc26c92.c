@@ -24,8 +24,10 @@ static inline uart_regs_t* get_uart_regs(void __iomem *base, const struct sc26c9
 static void _sc26c92_serial_init(void __iomem *base,
 			       struct sc26c92_uart_info *uart_info)
 {
-	duart_regs_t* duart_regs = (duart_regs_t*)base;
-	uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
+/* Leave configuration as-is */
+#if 0
+	volatile duart_regs_t* duart_regs = (duart_regs_t*)base;
+	volatile uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
 
     duart_regs->ACR = ACR_BAUDGEN_TABLE_0 | ACR_CTMODE_COUNTER_IP2;
     uart_regs->CR = CR_CMD_RESET_TX;
@@ -35,13 +37,16 @@ static void _sc26c92_serial_init(void __iomem *base,
     uart_regs->MR = MR1_EN_RX_RTS | MR1_NO_PARITY | MR1_BPC_8;
     uart_regs->MR = MR2_DIS_TX_RTS | MR2_DIS_CTS_TX | MR2_STOP_LEN_1_00;
     uart_regs->CR = CR_CMD_NONE | CR_ENA_RX | CR_ENA_TX;
+#endif
 }
 
 static void _sc26c92_serial_setbrg(void __iomem *base,
 				 struct sc26c92_uart_info *uart_info,
 				 int baudrate)
 {
-	uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
+/* Leave configuration as-is */
+#if 0
+	volatile uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
 	uint8_t baud_sel;
 
 	/* Disable TX and RX */
@@ -73,6 +78,7 @@ static void _sc26c92_serial_setbrg(void __iomem *base,
     uart_regs->CSR = CSR_BAUD_TX(baud_sel) | CSR_BAUD_RX(baud_sel);
 	/* Re-enable */
     uart_regs->CR = CR_CMD_NONE | CR_ENA_RX | CR_ENA_TX;
+#endif
 }
 
 static int sc26c92_serial_setbrg(struct udevice *dev, int baudrate)
@@ -87,7 +93,7 @@ static int sc26c92_serial_setbrg(struct udevice *dev, int baudrate)
 static int sc26c92_serial_setconfig(struct udevice *dev, uint serial_config)
 {
 	struct sc26c92_serial_plat *plat = dev_get_plat(dev);
-	uart_regs_t* uart_regs = get_uart_regs(plat->base, plat->uart_info);
+	volatile uart_regs_t* uart_regs = get_uart_regs(plat->base, plat->uart_info);
 	uint parity = SERIAL_GET_PARITY(serial_config);
 	uint bits = SERIAL_GET_BITS(serial_config);
 	uint stop = SERIAL_GET_STOP(serial_config);
@@ -97,10 +103,10 @@ static int sc26c92_serial_setconfig(struct udevice *dev, uint serial_config)
 	return 0;
 }
 
-static int _sc26c92_serial_getc(void __iomem *base,
+static inline int _sc26c92_serial_getc(void __iomem *base,
 			      struct sc26c92_uart_info *uart_info)
 {
-	uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
+	volatile uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
 
     if ((uart_regs->SR & 0x01) == 0) {
 		return -EAGAIN;
@@ -115,13 +121,13 @@ static int sc26c92_serial_getc(struct udevice *dev)
 	return _sc26c92_serial_getc(plat->base, plat->uart_info);
 }
 
-static int _sc26c92_serial_putc(void __iomem *base,
+static inline int _sc26c92_serial_putc(void __iomem *base,
 			      struct sc26c92_uart_info *uart_info,
 			      const char c)
 {
-	uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
+	volatile uart_regs_t* uart_regs = get_uart_regs(base, uart_info);
 
-    if ((uart_regs->SR & 0x04) == 0) {
+    if ((uart_regs->SR & SR_TXRDY) == 0) {
 		return -EAGAIN;
 	}
     uart_regs->TxFIFO = c;
@@ -139,12 +145,12 @@ static int sc26c92_serial_putc(struct udevice *dev, const char c)
 static int sc26c92_serial_pending(struct udevice *dev, bool input)
 {
 	struct sc26c92_serial_plat *plat = dev_get_plat(dev);
-	uart_regs_t* uart_regs = get_uart_regs(plat->base, plat->uart_info);
+	volatile uart_regs_t* uart_regs = get_uart_regs(plat->base, plat->uart_info);
 
 	if (input)
-		return (uart_regs->SR & 0x01) ? 1 : 0;
+		return (uart_regs->SR & SR_RXRDY) ? 1 : 0;
 	else
-		return (uart_regs->SR & 0x04) ? 0 : 1;
+		return (uart_regs->SR & SR_TXRDY) ? 0 : 1;
 }
 
 static int sc26c92_serial_probe(struct udevice *dev)
@@ -160,6 +166,7 @@ static int sc26c92_serial_probe(struct udevice *dev)
 
 static const struct udevice_id sc26c92_serial_id[] = {
 	{ .compatible = "phi,sc26c92-duart" },
+	{ }
 };
 
 static int sc26c92_serial_of_to_plat(struct udevice *dev)
@@ -224,8 +231,7 @@ static inline void _debug_uart_putc(int c)
 	void __iomem *base = (void __iomem *)CONFIG_VAL(DEBUG_UART_BASE);
 	struct sc26c92_uart_info *uart_info = _debug_uart_info();
 
-	while (_sc26c92_serial_putc(base, uart_info, c) == -EAGAIN)
-		;
+	while(_sc26c92_serial_putc(base, uart_info, c) == -EAGAIN);
 }
 
 DEBUG_UART_FUNCS

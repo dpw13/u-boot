@@ -28,14 +28,19 @@
 #define CFG_SYS_CLK			10000000
 #define CFG_SYS_CPU_CLK		40000000
 
-/* Definitions for initial stack pointer and data area (in DPRAM) */
-#define CFG_SYS_INIT_RAM_ADDR	0x04000000
-/* size of internal SRAM */
-#define CFG_SYS_INIT_RAM_SIZE	0x1000
+/* Definitions data area (in DPRAM) */
 
 #define CFG_SYS_SDRAM_BASE		0x04000000
-#define CFG_SYS_SDRAM_SIZE		0x04000000
+#define CFG_SYS_SDRAM_SIZE		0x01000000
 #define CFG_SYS_FLASH_BASE		0xfff00000
+
+/* This could be SRAM but there's a check in fdtdec.c that expects
+ * the gd ptr to be greater than the FDT. If we put gd into SRAM,
+ * that check fails.
+ */
+#define CFG_SYS_INIT_RAM_ADDR	CFG_SYS_SDRAM_BASE
+/* size of RAM */
+#define CFG_SYS_INIT_RAM_SIZE	CFG_SYS_SDRAM_SIZE
 
 /* memory map space for linux boot data */
 #define CFG_SYS_BOOTMAPSZ		(8 << 20)
