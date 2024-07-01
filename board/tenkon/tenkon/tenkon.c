@@ -25,9 +25,25 @@ int checkboard(void)
 	return 0;
 }
 
+#define DRAM_CFG_BASE 0xF8000000
+
 int dram_init(void)
 {
-	// TODO
+	/* TODO: magic numbers */
+	const uint32_t C = 0b00101100000;
+	const uint32_t R = 0b00111010111;
+	const uint32_t B = 0b11;
+	const uint32_t EC0 = 0;
+
+	const uint32_t byte_offset = EC0 ? 0 : 3;
+	/* Map the configuration words to the address lines */
+	const uintptr_t cfg_addr = DRAM_CFG_BASE | (R << 15) | (B << 13) | (C << 2) | byte_offset;
+
+	/* Configure the DRAM chip by accessing the specified address. The value written
+	 * doesn't matter but the PLDs are expected a write.
+	 */
+	*(volatile uint8_t *)cfg_addr = 0;
+
 	gd->ram_size = get_ram_size((long *)CFG_SYS_SDRAM_BASE,
 				    CFG_SYS_SDRAM_SIZE);
 

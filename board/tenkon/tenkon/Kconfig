@@ -15,6 +15,15 @@ config SYS_VENDOR
 config SYS_CONFIG_NAME
         default "tenkon"
 
+config SYS_HAS_SRAM
+        default "y"
+
+config SYS_SRAM_BASE
+        default "0x00000000"
+
+config SYS_SRAM_SIZE
+        default "0x00080000"
+
 endif
 
 
