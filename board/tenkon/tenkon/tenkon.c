@@ -28,7 +28,7 @@ int checkboard(void)
 int dram_init(void)
 {
 	// TODO
-	gd->ram_size = get_ram_size(CFG_SYS_SDRAM_BASE,
+	gd->ram_size = get_ram_size((long *)CFG_SYS_SDRAM_BASE,
 				    CFG_SYS_SDRAM_SIZE);
 
 	return 0;

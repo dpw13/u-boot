@@ -20,10 +20,11 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int do_reset(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
+int __attribute__((noreturn)) do_reset(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
 {
 	// No reset, just halt
-    asm("stop #0x2700");
+    asm("reset");
+	__builtin_unreachable();
 }
 
 #if defined(CONFIG_DISPLAY_CPUINFO)
