@@ -14,6 +14,12 @@
 #include <vsprintf.h>
 #include <linux/ctype.h>
 
+#ifdef DEBUG
+#define debug(fmt, args...) printf(fmt, ## args)
+#else
+#define debug(fmt, args...)
+#endif
+
 /* from lib/kstrtox.c */
 static const char *_parse_integer_fixup_radix(const char *s, uint *basep)
 {
@@ -45,7 +51,7 @@ static const char *_parse_integer_fixup_radix(const char *s, uint *basep)
  * @ch: Character to convert (expects '0'..'9', 'a'..'f' or 'A'..'F')
  * Return: value of digit (0..0xf) or 255 if the character is invalid
  */
-static uint decode_digit(int ch)
+static inline uint decode_digit(unsigned char ch)
 {
 	if (!isxdigit(ch))
 		return 256;
@@ -62,10 +68,17 @@ ulong simple_strtoul(const char *cp, char **endp, uint base)
 
 	cp = _parse_integer_fixup_radix(cp, &base);
 
-	while (value = decode_digit(*cp), value < base) {
+	debug("simple_strtoul: %s (base %d)\n", cp, base);
+
+	while (1) {
+		value = decode_digit(*cp);
+		if (value >= base)
+			break;
 		result = result * base + value;
 		cp++;
 	}
+
+	debug("simple_strtoul: %d, stopped on %c (%d)\n", result, *cp, value);
 
 	if (endp)
 		*endp = (char *)cp;
@@ -165,7 +178,10 @@ unsigned long long simple_strtoull(const char *cp, char **endp,
 
 	cp = _parse_integer_fixup_radix(cp, &base);
 
-	while (value = decode_digit(*cp), value < base) {
+	while (1) {
+		value = decode_digit(*cp);
+		if (value < base)
+			break;
 		result = result * base + value;
 		cp++;
 	}
