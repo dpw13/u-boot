@@ -19,13 +19,12 @@
 #define CFG_SYS_SDRAM_SIZE		0x04000000
 #define CFG_SYS_FLASH_BASE		0xfff00000
 
-/* This could be SRAM but there's a check in fdtdec.c that expects
- * the gd ptr to be greater than the FDT. If we put gd into SRAM,
- * that check fails.
+/* Start off in SRAM. If the FDT is loaded from the previous
+ * stage (CONFIG_OF_SEPARATE), it must be at a higher location
+ * than this. See panic in fdt_find_separate in fdtdec.c.
  */
-#define CFG_SYS_INIT_RAM_ADDR	CFG_SYS_SDRAM_BASE
-/* size of RAM */
-#define CFG_SYS_INIT_RAM_SIZE	CFG_SYS_SDRAM_SIZE
+#define CFG_SYS_INIT_RAM_ADDR	CONFIG_SYS_SRAM_BASE
+#define CFG_SYS_INIT_RAM_SIZE	CONFIG_SYS_SRAM_SIZE
 
 /* memory map space for linux boot data */
 #define CFG_SYS_BOOTMAPSZ		(8 << 20)

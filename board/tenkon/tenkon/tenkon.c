@@ -29,6 +29,8 @@ int checkboard(void)
 
 int dram_init(void)
 {
+	debug("dram_init: baudrate=%d\n", gd->baudrate);
+
 	/* TODO: magic numbers */
 	const uint32_t C = 0b00101100000;
 	const uint32_t R = 0b00111010111;
@@ -43,6 +45,10 @@ int dram_init(void)
 	 * doesn't matter but the PLDs are expected a write.
 	 */
 	*(volatile uint8_t *)cfg_addr = 0;
+
+	/* Delay. Must be at least 60 ms */
+	for (uint32_t i = 0; i < 100000; i++)
+		asm("nop");
 
 	gd->ram_size = get_ram_size((long *)CFG_SYS_SDRAM_BASE,
 				    CFG_SYS_SDRAM_SIZE);
