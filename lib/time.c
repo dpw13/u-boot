@@ -182,14 +182,10 @@ void __weak __udelay(unsigned long usec)
 {
 	uint64_t tmp;
 
-	printf("udelay %ld\n", usec);
-
 	tmp = get_ticks() + usec_to_tick(usec);	/* get current timestamp */
 
 	while (get_ticks() < tmp+1)	/* loop till event */
 		 /*NOP*/;
-
-	printf("udelay done\n");
 }
 
 /* ------------------------------------------------------------------------- */
