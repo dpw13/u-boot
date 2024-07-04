@@ -55,9 +55,3 @@ int dram_init(void)
 
 	return 0;
 }
-
-// TODO timer
-unsigned long timer_read_counter(void)
-{
-	return 0;
-}

@@ -12,7 +12,10 @@
 #include <config.h>
 
 #if defined(CONFIG_M68K_GENERIC)
-#define CFG_SYS_NUM_IRQS	(8)
+/* The 0x40 offset has been removed from interrupts.c so this is the FULL count
+ * of all exception vectors.
+ */
+#define CFG_SYS_NUM_IRQS	(256)
 #endif
 
 #if defined(CONFIG_MCF520x)

@@ -8,13 +8,12 @@
  */
 
 #include <stdio.h>
+#include <command.h>
 #include <irq_func.h>
 #include <watchdog.h>
 #include <asm/processor.h>
 #include <asm/immap.h>
 #include <asm/ptrace.h>
-
-#define	NR_IRQS		(CFG_SYS_NUM_IRQS)
 
 /*
  * Interrupt vector functions.
@@ -22,9 +21,10 @@
 struct interrupt_action {
 	interrupt_handler_t *handler;
 	void *arg;
+	uint32_t count;
 };
 
-static struct interrupt_action irq_vecs[NR_IRQS];
+static struct interrupt_action irq_vecs[CFG_SYS_NUM_IRQS];
 
 static __inline__ unsigned short get_sr (void)
 {
@@ -40,14 +40,21 @@ static __inline__ void set_sr (unsigned short sr)
 	asm volatile ("move.w %0,%%sr"::"r" (sr));
 }
 
+int interrupt_init(void)
+{
+	memset(irq_vecs, 0, sizeof(irq_vecs));
+	//enable_interrupts();
+	return 0;
+}
+
 /************************************************************************/
 /*
  * Install and free an interrupt handler
  */
 void irq_install_handler(int vec, interrupt_handler_t * handler, void *arg)
 {
-	if ((vec < 0) || (vec >= NR_IRQS)) {
-		printf ("irq_install_handler: wrong interrupt vector %d\n",
+	if ((vec < 0) || (vec >= CFG_SYS_NUM_IRQS)) {
+		printf ("irq_install_handler: bad interrupt vector %d\n",
 			vec);
 		return;
 	}
@@ -58,7 +65,7 @@ void irq_install_handler(int vec, interrupt_handler_t * handler, void *arg)
 
 void irq_free_handler(int vec)
 {
-	if ((vec < 0) || (vec >= NR_IRQS)) {
+	if ((vec < 0) || (vec >= CFG_SYS_NUM_IRQS)) {
 		return;
 	}
 
@@ -89,12 +96,31 @@ void int_handler (struct pt_regs *fp)
 	int vec;
 
 	vec = (fp->vector >> 2) & 0xff;
-	if (vec > 0x40)
-		vec -= 0x40;
 
 	if (irq_vecs[vec].handler != NULL) {
+		irq_vecs[vec].count++;
 		irq_vecs[vec].handler (irq_vecs[vec].arg);
 	} else {
 		printf ("\nBogus External Interrupt Vector %d\n", vec);
 	}
 }
+
+#if defined(CONFIG_CMD_IRQ)
+int do_irqinfo(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
+{
+	printf("Interrupt information:\n");
+	printf("Nr   Routine   Arg       Count\n");
+
+	for (uint16_t irq = 0; irq < CFG_SYS_NUM_IRQS; irq++) {
+		if (irq_vecs[irq].handler != NULL) {
+			printf("%02d  %08lx  %08lx  %d\n",
+					irq,
+					(uintptr_t)irq_vecs[irq].handler,
+					(uintptr_t)irq_vecs[irq].arg,
+					irq_vecs[irq].count);
+		}
+	}
+
+	return 0;
+}
+#endif
