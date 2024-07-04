@@ -181,6 +181,7 @@ obj-$(CONFIG_ARCH_ROCKCHIP) += rkimgtest.o
 obj-$(CONFIG_CMD_ATAGS) += atags.o
 
 obj-$(CONFIG_TARGET_ODROID_M1) += setbootdev.o
+obj-$(CONFIG_TARGET_ODROID_M1) += oem2env.o
 obj-$(CONFIG_TARGET_ODROID_M1S) += setbootdev.o
 obj-$(CONFIG_TARGET_ODROID_M2) += setbootdev.o
 
