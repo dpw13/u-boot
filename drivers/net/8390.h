@@ -41,8 +41,8 @@ are GPL, so this is, of course, GPL.
  *      - removed AMIGA_PCMCIA from this list, handled as ISA io now
  */
 
-#define n2k_inb(port)   (*((volatile unsigned char *)(port+CONFIG_DRIVER_NE2000_BASE)))
-#define n2k_outb(val,port)  (*((volatile unsigned char *)(port+CONFIG_DRIVER_NE2000_BASE)) = val)
+#define n2k_inb(base, port)   (*((volatile unsigned char *)(port+base)))
+#define n2k_outb(base, val, port)  (*((volatile unsigned char *)(port+base)) = val)
 
 #define EI_SHIFT(x)	(x)
 

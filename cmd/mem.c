@@ -944,7 +944,7 @@ static int compare_regions(volatile unsigned long *bufa,
 
 	for (i = 0; i < count; i++, p1++, p2++) {
 		if (*p1 != *p2) {
-			printf("FAILURE: 0x%08lx != 0x%08lx (delta=0x%08lx -> bit %ld) at offset 0x%08lx\n",
+			printf("FAILURE: 0x%08lx != 0x%08lx (delta=0x%08lx -> bit %d) at offset 0x%08lx\n",
 			       (unsigned long)*p1, (unsigned long)*p2,
 			       *p1 ^ *p2, __ffs(*p1 ^ *p2),
 				(unsigned long)(i * sizeof(unsigned long)));

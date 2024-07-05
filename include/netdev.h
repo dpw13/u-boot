@@ -58,7 +58,7 @@ int mvgbe_initialize(struct bd_info *bis);
 int mvneta_initialize(struct bd_info *bis, int base_addr, int devnum,
 		      int phy_addr);
 int natsemi_initialize(struct bd_info *bis);
-int ne2k_register(void);
+int ne2k_register(struct bd_info *bis);
 int npe_initialize(struct bd_info *bis);
 int ns8382x_initialize(struct bd_info *bis);
 int pcnet_initialize(struct bd_info *bis);

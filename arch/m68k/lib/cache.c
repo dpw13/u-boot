@@ -52,7 +52,7 @@ void icache_enable(void)
 
 void icache_disable(void)
 {
-	u32 temp = 0;
+	__maybe_unused u32 temp = 0;
 
 	*cf_icache_status = 0;
 	icache_invalid();
@@ -110,7 +110,7 @@ void dcache_enable(void)
 
 void dcache_disable(void)
 {
-	u32 temp = 0;
+	__maybe_unused u32 temp = 0;
 
 	*cf_dcache_status = 0;
 	dcache_invalid();

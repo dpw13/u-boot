@@ -21,16 +21,19 @@
 		uart0: uart@fe400000 {
 			compatible = "phi,sc26c92-duart";
 			reg = <0xfe400000 0x10>;
-			status = "disabled";
+			status = "okay";
 		};
 
-		/*
 		uart2: uart@fe000000 {
 			compatible = "phi,sc26c92-duart";
 			reg = <0xfe000000 0x10>;
-			status = "disabled";
+			status = "okay";
 		};
-		*/
+
+		ethernet0: enet@fd000000 {
+			compatible = "realtek,rtl8019as";
+			reg = <0xfd000000 0x2000>;
+		};
 
     };
 };

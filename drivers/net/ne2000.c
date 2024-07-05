@@ -175,35 +175,35 @@ static hw_info_t hw_info[] = {
 #define PCNET_RESET	0x1f	/* Issue a read to reset, a write to clear. */
 #define PCNET_MISC	0x18	/* For IBM CCAE and Socket EA cards */
 
-static void pcnet_reset_8390(u8* addr)
+static void pcnet_reset_8390(uint8_t* addr)
 {
 	int i, r;
 
-	n2k_outb(E8390_NODMA + E8390_PAGE0+E8390_STOP, E8390_CMD);
-	PRINTK("cmd (at %lx) is %x\n", addr + E8390_CMD, n2k_inb(E8390_CMD));
-	n2k_outb(E8390_NODMA+E8390_PAGE1+E8390_STOP, E8390_CMD);
-	PRINTK("cmd (at %lx) is %x\n", addr + E8390_CMD, n2k_inb(E8390_CMD));
-	n2k_outb(E8390_NODMA+E8390_PAGE0+E8390_STOP, E8390_CMD);
-	PRINTK("cmd (at %lx) is %x\n", addr + E8390_CMD, n2k_inb(E8390_CMD));
-	n2k_outb(E8390_NODMA+E8390_PAGE0+E8390_STOP, E8390_CMD);
+	n2k_outb(addr, E8390_NODMA + E8390_PAGE0+E8390_STOP, E8390_CMD);
+	debug("cmd (at %p) is %x\n", addr + E8390_CMD, n2k_inb(addr, E8390_CMD));
+	n2k_outb(addr, E8390_NODMA+E8390_PAGE1+E8390_STOP, E8390_CMD);
+	debug("cmd (at %p) is %x\n", addr + E8390_CMD, n2k_inb(addr, E8390_CMD));
+	n2k_outb(addr, E8390_NODMA+E8390_PAGE0+E8390_STOP, E8390_CMD);
+	debug("cmd (at %p) is %x\n", addr + E8390_CMD, n2k_inb(addr, E8390_CMD));
+	n2k_outb(addr, E8390_NODMA+E8390_PAGE0+E8390_STOP, E8390_CMD);
 
-	n2k_outb(n2k_inb(PCNET_RESET), PCNET_RESET);
+	n2k_outb(addr, n2k_inb(addr, PCNET_RESET), PCNET_RESET);
 
 	for (i = 0; i < 100; i++) {
-		if ((r = (n2k_inb(EN0_ISR) & ENISR_RESET)) != 0)
+		if ((r = (n2k_inb(addr, EN0_ISR) & ENISR_RESET)) != 0)
 			break;
-		PRINTK("got %x in reset\n", r);
+		debug("got %x in reset\n", r);
 		udelay(100);
 	}
-	n2k_outb(ENISR_RESET, EN0_ISR); /* Ack intr. */
+	n2k_outb(addr, ENISR_RESET, EN0_ISR); /* Ack intr. */
 
 	if (i == 100)
 		printf("pcnet_reset_8390() did not complete.\n");
 } /* pcnet_reset_8390 */
 
-int get_prom(u8* mac_addr, u8* base_addr)
+int get_prom(uint8_t* mac_addr, uint8_t* base_addr)
 {
-	u8 prom[32];
+	uint8_t prom[32];
 	int i, j;
 	struct {
 		u_char value, offset;
@@ -223,37 +223,37 @@ int get_prom(u8* mac_addr, u8* base_addr)
 		{E8390_RREAD+E8390_START, E8390_CMD},
 	};
 
-	PRINTK ("trying to get MAC via prom reading\n");
+	debug("trying to get MAC via prom reading\n");
 
 	pcnet_reset_8390 (base_addr);
 
 	mdelay (10);
 
 	for (i = 0; i < ARRAY_SIZE(program_seq); i++)
-		n2k_outb (program_seq[i].value, program_seq[i].offset);
+		n2k_outb(base_addr, program_seq[i].value, program_seq[i].offset);
 
-	PRINTK ("PROM:");
+	debug("PROM:");
 	for (i = 0; i < 32; i++) {
-		prom[i] = n2k_inb (PCNET_DATAPORT);
-		PRINTK (" %02x", prom[i]);
+		prom[i] = n2k_inb(base_addr, PCNET_DATAPORT);
+		debug(" %02x", prom[i]);
 	}
-	PRINTK ("\n");
+	debug("\n");
 	for (i = 0; i < NR_INFO; i++) {
 		if ((prom[0] == hw_info[i].a0) &&
 			(prom[2] == hw_info[i].a1) &&
 			(prom[4] == hw_info[i].a2)) {
-			PRINTK ("matched board %d\n", i);
+			debug("matched board %d\n", i);
 			break;
 		}
 	}
 	if ((i < NR_INFO) || ((prom[28] == 0x57) && (prom[30] == 0x57))) {
-		PRINTK ("on exit i is %d/%ld\n", i, NR_INFO);
-		PRINTK ("MAC address is ");
+		debug("on exit i is %d/%d\n", i, NR_INFO);
+		debug("MAC address is ");
 		for (j = 0; j < 6; j++) {
 			mac_addr[j] = prom[j << 1];
-			PRINTK ("%02x:", mac_addr[i]);
+			debug("%02x:", mac_addr[i]);
 		}
-		PRINTK ("\n");
+		debug("\n");
 		return (i < NR_INFO) ? i : 0;
 	}
 	return 0;

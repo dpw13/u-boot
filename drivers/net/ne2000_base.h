@@ -89,20 +89,18 @@ are GPL, so this is, of course, GPL.
  * 4 for packet allocation/free output
  * 8 for only startup status, so we can tell we're installed OK
  */
-#if 0
-#define DEBUG 0xf
+#if 1
+#define NE2K_DEBUG 0xf
 #else
-#define DEBUG 0
+#define NE2K_DEBUG 0
 #endif
 
-#if DEBUG & 1
+#if NE2K_DEBUG & 1
 #define DEBUG_FUNCTION() do { printf("%s\n", __FUNCTION__); } while (0)
 #define DEBUG_LINE() do { printf("%d\n", __LINE__); } while (0)
-#define PRINTK(args...) printf(args)
 #else
 #define DEBUG_FUNCTION() do {} while(0)
 #define DEBUG_LINE() do {} while(0)
-#define PRINTK(args...)
 #endif
 
 /* timeout for tx/rx in s */
