@@ -259,5 +259,5 @@ int get_prom(uint8_t* mac_addr, uint8_t* base_addr)
 		debug("\n");
 		return (i < NR_INFO) ? i : 0;
 	}
-	return 0;
+	return -ENODATA;
 }

@@ -120,7 +120,17 @@ typedef struct hw_info_t {
 	u32 flags;
 } hw_info_t;
 
+typedef enum {
+	TX_BUSY = -1,
+	TX_OK = 0,
+	TX_COLLISION,
+	TX_NO_CARRIER,
+	TX_ERR_FIFO,
+} tx_status_t;
+
 typedef struct dp83902a_priv_data {
+	bool initialized;
+	tx_status_t tx_status;
 	u8* base;
 	u8* data;
 	u8* reset;
@@ -133,6 +143,7 @@ typedef struct dp83902a_priv_data {
 	bool tx_started, running, hardwired_esa;
 	u8 esa[6];
 	void* plf_priv;
+	uint8_t *pbuf;
 
 	/* Buffer allocation */
 	int tx_buf1, tx_buf2;

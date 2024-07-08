@@ -102,17 +102,11 @@ Add SNMP
 #include "ne2000.h"
 #endif
 
-typedef enum {
-	TX_BUSY = -1,
-	TX_OK = 0,
-	TX_COLLISION,
-	TX_NO_CARRIER,
-} tx_status_t;
-
 /* forward definition of function used for the uboot interface */
 static void uboot_push_packet_len(dp83902a_priv_data_t *dp, int len);
-static void uboot_push_tx_status(tx_status_t key, int val);
 
+/* This is the default startup value for the RTL8019AS */
+static const uint8_t default_mac[6] = {0x00, 0x00, 0x40, 0x00, 0x00, 0x00};
 /**
  * This function reads the MAC address from the serial EEPROM,
  * used if PROM read fails. Does nothing for ax88796 chips (sh boards)
@@ -129,8 +123,6 @@ dp83902a_get_ethaddr(dp83902a_priv_data_t *dp, unsigned char *enetaddr)
 
 	if (!base)
 		return -ENODEV;	/* No device found */
-
-	DEBUG_LINE();
 
 #if defined(NE2000_BASIC_INIT)
 	/* AX88796L doesn't need */
@@ -149,6 +141,14 @@ dp83902a_get_ethaddr(dp83902a_priv_data_t *dp, unsigned char *enetaddr)
 		dp->esa[3],
 		dp->esa[4],
 		dp->esa[5] );
+
+	if (memcmp(default_mac, dp->esa, 6) == 0) {
+		/* This is the startup default and does not consitute an
+		 * intentional address. Allow u-boot to select a random
+		 * address if configured to do so.
+		 */
+		return -ENODATA;
+	}
 
 	memcpy(enetaddr, dp->esa, 6); /* Use MAC from serial EEPROM */
 #endif	/* NE2000_BASIC_INIT */
@@ -535,16 +535,22 @@ dp83902a_TxEvent(dp83902a_priv_data_t *dp)
 {
 	uint8_t *base = dp->base;
 	__maybe_unused uint8_t tsr;
-	uint32_t key;
+	dp->tx_status = TX_BUSY;
 
 	DEBUG_FUNCTION();
 
 	DP_IN(base, DP_TSR, tsr);
+	if (tsr & (DP_TSR_OWC | DP_TSR_ABT | DP_TSR_COL)) {
+		dp->tx_status = TX_COLLISION;
+	} else if (tsr & (DP_TSR_CRS | DP_TSR_CDH)) {
+		dp->tx_status = TX_NO_CARRIER;
+	} else if (tsr & (DP_TSR_TxP)) {
+		dp->tx_status = TX_OK;
+	}
+
 	if (dp->tx_int == 1) {
-		key = dp->tx1_key;
 		dp->tx1 = 0;
 	} else {
-		key = dp->tx2_key;
 		dp->tx2 = 0;
 	}
 	/* Start next packet if one is ready */
@@ -558,8 +564,6 @@ dp83902a_TxEvent(dp83902a_priv_data_t *dp)
 	} else {
 		dp->tx_int = 0;
 	}
-	/* Tell higher level we sent this packet */
-	uboot_push_tx_status(key, 0);
 }
 
 /*
@@ -675,26 +679,17 @@ dp83902a_poll(dp83902a_priv_data_t *dp)
 
 
 /* U-Boot specific routines */
-static uint8_t *pbuf = NULL;
-
-static tx_status_t tx_status = -1;
-static int initialized = 0;
 
 static void uboot_push_packet_len(dp83902a_priv_data_t *dp, int len) {
 	debug("pushed len = %d\n", len);
-	if (len >= 2000) {
+	if (len >= IEEE_8023_MAX_FRAME) {
 		printf("NE2000: packet too big\n");
 		return;
 	}
-	dp83902a_recv(dp, &pbuf[0], len);
+	dp83902a_recv(dp, dp->pbuf, len);
 
 	/*Just pass it to the upper layer*/
-	net_process_received_packet(&pbuf[0], len);
-}
-
-static void uboot_push_tx_status(tx_status_t status, int val) {
-	debug("tx status = %d\n", status);
-	tx_status = status;
+	net_process_received_packet(dp->pbuf, len);
 }
 
 /**
@@ -704,30 +699,43 @@ static void uboot_push_tx_status(tx_status_t status, int val) {
  * @param struct ethdevice of this instance of the driver for dev->enetaddr
  * @return 0 on success, -1 on error (causing caller to print error msg)
  */
-static int ne2k_setup_driver(struct udevice *dev)
+static int ne2k_eth_probe(struct udevice *dev)
 {
-	dp83902a_priv_data_t *nic = dev_get_priv(dev);
+	struct eth_pdata *pdata;
+	dp83902a_priv_data_t *dp;
 
-	debug("### ne2k_setup_driver\n");
+	if (dev == NULL)
+		return -EINVAL;
 
-	if (!pbuf) {
-		pbuf = malloc(2000);
-		if (!pbuf) {
-			printf("Cannot allocate rx buffer\n");
-			return -ENOMEM;
-		}
+	pdata = dev_get_plat(dev);
+	if (pdata == NULL)
+		return -EINVAL;
+
+	dp = dev_get_priv(dev);
+	if (dp == NULL)
+		return -EINVAL;
+
+	debug("### ne2k_eth_probe\n");
+
+	pdata->max_speed = 10;
+	pdata->phy_interface = PHY_INTERFACE_MODE_INTERNAL;
+
+	dp->pbuf = malloc(IEEE_8023_MAX_FRAME);
+	if (!dp->pbuf) {
+		printf("Cannot allocate rx buffer\n");
+		return -ENOMEM;
 	}
 
-	if (!nic->base) {
+	if (!dp->base) {
 		printf("NE2K must have base assigned\n");
 		return -EINVAL;
 	}
 
-	nic->data = nic->base + DP_DATA;
-	nic->tx_buf1 = START_PG;
-	nic->tx_buf2 = START_PG2;
-	nic->rx_buf_start = RX_START;
-	nic->rx_buf_end = RX_END;
+	dp->data = dp->base + DP_DATA;
+	dp->tx_buf1 = START_PG;
+	dp->tx_buf2 = START_PG2;
+	dp->rx_buf_start = RX_START;
+	dp->rx_buf_end = RX_END;
 
 	return 0;
 }
@@ -735,12 +743,14 @@ static int ne2k_setup_driver(struct udevice *dev)
 static int ne2k_read_rom_hwaddr(struct udevice *dev)
 {
 	struct eth_pdata *pdata = dev_get_plat(dev);
-	dp83902a_priv_data_t *nic = dev_get_priv(dev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
+	int ret;
 
-	if (!get_prom(pdata->enetaddr, nic->base)) /* get MAC from prom */
-		dp83902a_get_ethaddr(nic, pdata->enetaddr);   /* fallback: seeprom */
+	ret = get_prom(pdata->enetaddr, dp->base);
+	if (!ret) /* get MAC from prom */
+		ret = dp83902a_get_ethaddr(dp, pdata->enetaddr);   /* fallback: seeprom */
 
-	return 0;
+	return ret;
 }
 
 static int ne2k_write_hwaddr(struct udevice *dev)
@@ -755,7 +765,7 @@ static int ne2k_init(struct udevice *dev)
 	struct eth_pdata *pdata = dev_get_plat(dev);
 	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	dp83902a_start(dp, pdata->enetaddr);
-	initialized = 1;
+	dp->initialized = 1;
 	return 0;
 }
 
@@ -763,9 +773,9 @@ static void ne2k_halt(struct udevice *dev)
 {
 	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	debug("### ne2k_halt\n");
-	if(initialized)
+	if(dp->initialized)
 		dp83902a_stop(dp);
-	initialized = 0;
+	dp->initialized = 0;
 }
 
 static int ne2k_recv(struct udevice *dev, int flags, uint8_t **packetp)
@@ -782,13 +792,13 @@ static int ne2k_send(struct udevice *dev, void *packet, int length)
 
 	debug("### ne2k_send\n");
 
-	tx_status = TX_BUSY;
+	dp->tx_status = TX_BUSY;
 
 	dp83902a_send(dp, (uint8_t *) packet, length, 666);
 	tmo = get_timer (0) + TOUT * CONFIG_SYS_HZ;
 	while(1) {
 		dp83902a_poll(dp);
-		switch(tx_status) {
+		switch(dp->tx_status) {
 			case TX_BUSY:
 				// keep waiting
 				break;
@@ -801,6 +811,9 @@ static int ne2k_send(struct udevice *dev, void *packet, int length)
 			case TX_NO_CARRIER:
 				debug("Lost carrier during transmit\n");
 				return -ENOENT;
+			case TX_ERR_FIFO:
+				debug("FIFO underflow during transmit\n");
+				return -ENODATA;
 		}
 		if (get_timer (0) >= tmo) {
 			printf("transmission error (timeout)\n");
@@ -852,18 +865,6 @@ static int ne2k_eth_of_to_plat(struct udevice *dev)
 		return -EINVAL;
 	
 	return 0;
-}
-
-/**
- * Setup the driver for use and register it with the eth layer
- * @return 0 on success, -1 on error (causing caller to print error msg)
- */
-static int ne2k_eth_probe(struct udevice *dev)
-{
-	if (dev == NULL)
-		return -EINVAL;
-
-	return ne2k_setup_driver(dev);
 }
 
 static const struct eth_ops ne2k_eth_ops = {
