@@ -30,9 +30,9 @@
 			status = "okay";
 		};
 
-		ethernet0: enet@fd000000 {
+		ethernet0: enet@fd800000 {
 			compatible = "realtek,rtl8019as";
-			reg = <0xfd000000 0x2000>;
+			reg = <0xfd800000 0x2000>;
 		};
 
     };

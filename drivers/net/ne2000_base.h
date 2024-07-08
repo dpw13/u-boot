@@ -89,7 +89,7 @@ are GPL, so this is, of course, GPL.
  * 4 for packet allocation/free output
  * 8 for only startup status, so we can tell we're installed OK
  */
-#if 1
+#ifdef DEBUG
 #define NE2K_DEBUG 0xf
 #else
 #define NE2K_DEBUG 0
@@ -137,6 +137,11 @@ typedef struct dp83902a_priv_data {
 	/* Buffer allocation */
 	int tx_buf1, tx_buf2;
 	int rx_buf_start, rx_buf_end;
+
+	/* Counters */
+	u64 frame_err_count;
+	u64 crc_err_count;
+	u64 missed_pkt_count;
 } dp83902a_priv_data_t;
 
 /* ------------------------------------------------------------------------ */
@@ -159,7 +164,9 @@ typedef struct dp83902a_priv_data {
 #define DP_RSAL		0x08	/* write */
 #define DP_CRDA1	0x09
 #define DP_RSAH		0x09	/* write */
+#define DP_IDL		0x0a
 #define DP_RBCL		0x0a	/* write */
+#define DP_IDH		0x0b
 #define DP_RBCH		0x0b	/* write */
 #define DP_RSR		0x0c
 #define DP_RCR		0x0c	/* write */

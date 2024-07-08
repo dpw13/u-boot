@@ -72,6 +72,9 @@ Add SNMP
 ==========================================================================
 */
 
+#define DEBUG
+#define LOG_DEBUG
+
 #include <common.h>
 #include <command.h>
 #include <linux/delay.h>

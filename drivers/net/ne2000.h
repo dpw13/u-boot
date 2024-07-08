@@ -89,8 +89,46 @@ are GPL, so this is, of course, GPL.
 #define RX_START	0x50
 #define RX_END		0x80
 
-#define DP_IN(_b_, _o_, _d_)	(_d_) = *( (vu_char *) ((_b_)+(_o_)))
-#define DP_OUT(_b_, _o_, _d_)	*( (vu_char *) ((_b_)+(_o_))) = (_d_)
+#define OFFSET_BITS	12
+
+static inline void* dp_fix_addr(const void* addr) {
+	/* Offset at card is shifted up by 1, but we still need to
+	 * specify the proper window...
+	 */
+	const uintptr_t mask = ((uintptr_t)-1) << OFFSET_BITS;
+	uintptr_t ret = (uintptr_t)addr & mask;
+	ret |= ((uintptr_t)addr & (~mask)) << 1;
+	return (void *)ret;
+}
+
+/* Manage data bus issues on Tenkon */
+static inline void dp_wr(const void* addr, const uint8_t val) {
+	uint16_t val16 = val;
+	asm("ror.w %1,%0"
+		: "+d" (val16)
+		: "ir" (7)
+		);
+	*(volatile uint16_t *)dp_fix_addr(addr) = val16;
+}
+
+static inline uint8_t dp_rd(const void *addr) {
+	uint16_t val16 = *(volatile uint16_t *)dp_fix_addr(addr);
+	asm("rol.w %1,%0"
+		: "+d" (val16)
+		: "ir" (7)
+		);
+	/* Truncate u16 as only the bottom byte is valid */
+	return (uint8_t)val16;
+}
+
+#if 0
 #define DP_IN_DATA(_b_, _d_)	(_d_) = *( (vu_char *) ((_b_)))
 #define DP_OUT_DATA(_b_, _d_)	*( (vu_char *) ((_b_))) = (_d_)
+#else
+#define DP_IN_DATA(_b_, _d_)	(_d_) = dp_rd((_b_))
+#define DP_OUT_DATA(_b_, _d_)	dp_wr((_b_), (_d_))
+#endif
+#define DP_IN(_b_, _o_, _d_)	DP_IN_DATA((_b_)+(_o_), (_d_))
+#define DP_OUT(_b_, _o_, _d_)	DP_OUT_DATA((_b_)+(_o_), (_d_))
+
 #endif /* __DRIVERS_NE2000_H__ */

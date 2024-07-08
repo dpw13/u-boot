@@ -72,6 +72,7 @@ Add SNMP
 ==========================================================================
 */
 
+#define LOG_DEBUG
 #define DEBUG
 
 #include <common.h>
@@ -81,10 +82,12 @@ Add SNMP
 #include <dm/ofnode.h>
 #include <dm/read.h>
 #include <env.h>
+#include <irq_func.h>
 #include <log.h>
 #include <net.h>
 #include <malloc.h>
 #include <linux/compiler.h>
+#include <linux/ethtool.h>
 #include <linux/types.h>
 #include <stdint.h>
 
@@ -99,9 +102,16 @@ Add SNMP
 #include "ne2000.h"
 #endif
 
+typedef enum {
+	TX_BUSY = -1,
+	TX_OK = 0,
+	TX_COLLISION,
+	TX_NO_CARRIER,
+} tx_status_t;
+
 /* forward definition of function used for the uboot interface */
 static void uboot_push_packet_len(dp83902a_priv_data_t *dp, int len);
-static void uboot_push_tx_done(int key, int val);
+static void uboot_push_tx_status(tx_status_t key, int val);
 
 /**
  * This function reads the MAC address from the serial EEPROM,
@@ -177,6 +187,8 @@ dp83902a_stop(dp83902a_priv_data_t *dp)
 	dp->running = false;
 }
 
+static void dp83902a_poll(dp83902a_priv_data_t *dp);
+
 /*
  * This function is called to "start up" the interface. It may be called
  * multiple times, even when the hardware is already running. It will be
@@ -215,6 +227,9 @@ dp83902a_start(dp83902a_priv_data_t *dp, uint8_t * enetaddr)
 	DP_OUT(base, DP_CR, DP_CR_PAGE0 | DP_CR_NODMA | DP_CR_START);
 	DP_OUT(base, DP_TCR, DP_TCR_NORMAL); /* Normal transmit operations */
 	DP_OUT(base, DP_RCR, DP_RCR_AB); /* Accept broadcast, no errors, no multicast */
+
+	irq_install_handler(249, (interrupt_handler_t *)dp83902a_poll, dp);
+
 	dp->running = true;
 }
 
@@ -544,15 +559,15 @@ dp83902a_TxEvent(dp83902a_priv_data_t *dp)
 		dp->tx_int = 0;
 	}
 	/* Tell higher level we sent this packet */
-	uboot_push_tx_done(key, 0);
+	uboot_push_tx_status(key, 0);
 }
 
 /*
- * Read the tally counters to clear them. Called in response to a CNT
+ * Read the tally counters. Called in response to a CNT
  * interrupt.
  */
 static void
-dp83902a_ClearCounters(dp83902a_priv_data_t *dp)
+dp83902a_ReadCounters(dp83902a_priv_data_t *dp)
 {
 	uint8_t *base = dp->base;
 	__maybe_unused uint8_t cnt1, cnt2, cnt3;
@@ -561,6 +576,10 @@ dp83902a_ClearCounters(dp83902a_priv_data_t *dp)
 	DP_IN(base, DP_CER, cnt2);
 	DP_IN(base, DP_MISSED, cnt3);
 	DP_OUT(base, DP_ISR, DP_ISR_CNT);
+
+	dp->frame_err_count += cnt1;
+	dp->crc_err_count += cnt2;
+	dp->missed_pkt_count += cnt3;
 }
 
 /*
@@ -622,7 +641,7 @@ dp83902a_poll(dp83902a_priv_data_t *dp)
 		 * we should read their values to reset them.
 		 */
 		if (isr & DP_ISR_CNT) {
-			dp83902a_ClearCounters(dp);
+			dp83902a_ReadCounters(dp);
 		}
 		/*
 		 * Check for overflow. It's a special case, since there's a
@@ -658,7 +677,7 @@ dp83902a_poll(dp83902a_priv_data_t *dp)
 /* U-Boot specific routines */
 static uint8_t *pbuf = NULL;
 
-static int pkey = -1;
+static tx_status_t tx_status = -1;
 static int initialized = 0;
 
 static void uboot_push_packet_len(dp83902a_priv_data_t *dp, int len) {
@@ -673,9 +692,9 @@ static void uboot_push_packet_len(dp83902a_priv_data_t *dp, int len) {
 	net_process_received_packet(&pbuf[0], len);
 }
 
-static void uboot_push_tx_done(int key, int val) {
-	debug("pushed key = %d\n", key);
-	pkey = key;
+static void uboot_push_tx_status(tx_status_t status, int val) {
+	debug("tx status = %d\n", status);
+	tx_status = status;
 }
 
 /**
@@ -685,10 +704,9 @@ static void uboot_push_tx_done(int key, int val) {
  * @param struct ethdevice of this instance of the driver for dev->enetaddr
  * @return 0 on success, -1 on error (causing caller to print error msg)
  */
-static int ne2k_setup_driver(struct udevice *pdev)
+static int ne2k_setup_driver(struct udevice *dev)
 {
-	struct eth_pdata *pdata = dev_get_plat(pdev);
-	dp83902a_priv_data_t *nic = dev_get_priv(pdev);
+	dp83902a_priv_data_t *nic = dev_get_priv(dev);
 
 	debug("### ne2k_setup_driver\n");
 
@@ -711,80 +729,112 @@ static int ne2k_setup_driver(struct udevice *pdev)
 	nic->rx_buf_start = RX_START;
 	nic->rx_buf_end = RX_END;
 
-	/*
-	 * According to doc/README.enetaddr, drivers shall give priority
-	 * to the MAC address value in the environment, so we do not read
-	 * it from the prom or eeprom if it is specified in the environment.
-	 */
-	if (!eth_env_get_enetaddr("ethaddr", pdata->enetaddr)) {
-		/* If the MAC address is not in the environment, get it: */
-		if (!get_prom(pdata->enetaddr, nic->base)) /* get MAC from prom */
-			dp83902a_get_ethaddr(nic, pdata->enetaddr);   /* fallback: seeprom */
-		/* And write it into the environment otherwise eth_write_hwaddr
-		 * returns -1 due to eth_env_get_enetaddr_by_index() failing,
-		 * and this causes "Warning: failed to set MAC address", and
-		 * cmd_bdinfo has no ethaddr value which it can show: */
-		eth_env_set_enetaddr("ethaddr", pdata->enetaddr);
-	}
 	return 0;
 }
 
-static int ne2k_write_hwaddr(struct udevice *udev)
+static int ne2k_read_rom_hwaddr(struct udevice *dev)
 {
-	struct eth_pdata *pdata = dev_get_plat(udev);
-	dp83902a_priv_data_t *dp = dev_get_priv(udev);
+	struct eth_pdata *pdata = dev_get_plat(dev);
+	dp83902a_priv_data_t *nic = dev_get_priv(dev);
+
+	if (!get_prom(pdata->enetaddr, nic->base)) /* get MAC from prom */
+		dp83902a_get_ethaddr(nic, pdata->enetaddr);   /* fallback: seeprom */
+
+	return 0;
+}
+
+static int ne2k_write_hwaddr(struct udevice *dev)
+{
+	struct eth_pdata *pdata = dev_get_plat(dev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	return dp83902a_set_ethaddr(dp, pdata->enetaddr);
 }
 
-static int ne2k_init(struct udevice *pdev)
+static int ne2k_init(struct udevice *dev)
 {
-	struct eth_pdata *pdata = dev_get_plat(pdev);
-	dp83902a_priv_data_t *dp = dev_get_priv(pdev);
+	struct eth_pdata *pdata = dev_get_plat(dev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	dp83902a_start(dp, pdata->enetaddr);
 	initialized = 1;
 	return 0;
 }
 
-static void ne2k_halt(struct udevice *pdev)
+static void ne2k_halt(struct udevice *dev)
 {
-	dp83902a_priv_data_t *dp = dev_get_priv(pdev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	debug("### ne2k_halt\n");
 	if(initialized)
 		dp83902a_stop(dp);
 	initialized = 0;
 }
 
-static int ne2k_recv(struct udevice *pdev, int flags, uint8_t **packetp)
+static int ne2k_recv(struct udevice *dev, int flags, uint8_t **packetp)
 {
-	dp83902a_priv_data_t *dp = dev_get_priv(pdev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	dp83902a_poll(dp);
 	return 1;
 }
 
-static int ne2k_send(struct udevice *pdev, void *packet, int length)
+static int ne2k_send(struct udevice *dev, void *packet, int length)
 {
-	dp83902a_priv_data_t *dp = dev_get_priv(pdev);
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
 	int tmo;
 
 	debug("### ne2k_send\n");
 
-	pkey = -1;
+	tx_status = TX_BUSY;
 
 	dp83902a_send(dp, (uint8_t *) packet, length, 666);
 	tmo = get_timer (0) + TOUT * CONFIG_SYS_HZ;
 	while(1) {
 		dp83902a_poll(dp);
-		if (pkey != -1) {
-			debug("Packet sucesfully sent\n");
-			return 0;
+		switch(tx_status) {
+			case TX_BUSY:
+				// keep waiting
+				break;
+			case TX_OK:
+				debug("Packet sucesfully sent\n");
+				return 0;
+			case TX_COLLISION:
+				debug("Collision detected during transmit\n");
+				return -EAGAIN;
+			case TX_NO_CARRIER:
+				debug("Lost carrier during transmit\n");
+				return -ENOENT;
 		}
 		if (get_timer (0) >= tmo) {
-			printf("transmission error (timoeut)\n");
-			return 0;
+			printf("transmission error (timeout)\n");
+			return -ETIMEDOUT;
 		}
 
 	}
 	return 0;
+}
+
+const char *ne2k_stat_names[] = {
+	"Frame alignment errors",
+	"CRC errors",
+	"Missed packets",
+};
+
+static int ne2k_get_sset_count(struct udevice *dev)
+{
+	return ARRAY_SIZE(ne2k_stat_names);
+}
+
+static void ne2k_get_strings(struct udevice *dev, u8 *data)
+{
+	for (int i = 0; i < ARRAY_SIZE(ne2k_stat_names); i++)
+		strcpy(data + i * ETH_GSTRING_LEN, ne2k_stat_names[i]);
+}
+
+static void ne2k_get_stats(struct udevice *dev, u64 *data)
+{
+	dp83902a_priv_data_t *dp = dev_get_priv(dev);
+
+	data[0] = dp->frame_err_count;
+	data[1] = dp->crc_err_count;
+	data[2] = dp->missed_pkt_count;
 }
 
 static int ne2k_eth_bind(struct udevice *dev)
@@ -822,6 +872,10 @@ static const struct eth_ops ne2k_eth_ops = {
 	.recv	= ne2k_recv,
 	.stop	= ne2k_halt,
 	.write_hwaddr = ne2k_write_hwaddr,
+	.read_rom_hwaddr = ne2k_read_rom_hwaddr,
+	.get_sset_count = ne2k_get_sset_count,
+	.get_strings = ne2k_get_strings,
+	.get_stats = ne2k_get_stats,
 };
 
 static const struct udevice_id ne2k_eth_ids[] = {
