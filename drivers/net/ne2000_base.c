@@ -850,11 +850,6 @@ static void ne2k_get_stats(struct udevice *dev, u64 *data)
 	data[2] = dp->missed_pkt_count;
 }
 
-static int ne2k_eth_bind(struct udevice *dev)
-{
-	return device_set_name(dev, "ne2k");
-}
-
 static int ne2k_eth_of_to_plat(struct udevice *dev)
 {
 	dp83902a_priv_data_t *priv = dev_get_priv(dev);
@@ -890,7 +885,6 @@ U_BOOT_DRIVER(eth_ne2k) = {
 	.id	= UCLASS_ETH,
 	.of_match	= ne2k_eth_ids,
 	.of_to_plat = ne2k_eth_of_to_plat,
-	.bind	= ne2k_eth_bind,
 	.probe	= ne2k_eth_probe,
 	.ops	= &ne2k_eth_ops,
 	.priv_auto	= sizeof(struct dp83902a_priv_data),
