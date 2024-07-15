@@ -1,6 +1,7 @@
-#include <serial.h>
+#include <common.h>
 #include <dm.h>
 #include <dm/device_compat.h>
+#include <serial.h>
 #include "serial_sc26c92.h"
 
 static inline uart_regs_t* get_uart_regs(void __iomem *base, const struct sc26c92_uart_info *uart_info)
@@ -258,7 +259,7 @@ U_BOOT_DRIVER(serial_sc26c92) = {
 #include <debug_uart.h>
 
 struct sc26c92_uart_info sc26c92_a_info = {
-	.which = 0,
+	.which = 1,
 };
 
 static inline struct sc26c92_uart_info *_debug_uart_info(void)
