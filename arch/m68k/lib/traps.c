@@ -63,7 +63,12 @@ static void trap_init(ulong value) {
 
 int arch_initr_trap(void)
 {
+#ifdef CONFIG_SYS_SRAM_BASE
+	/* Use SRAM if available */
+	trap_init(CONFIG_SYS_SRAM_BASE);
+#else
 	trap_init(CFG_SYS_SDRAM_BASE);
+#endif
 
 	return 0;
 }

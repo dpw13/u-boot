@@ -101,9 +101,7 @@ _start:
 	move.l	#__got_start, %a5
 
 	/* setup stack initially on top of internal SRAM */
-	/*move.l  #(CONFIG_SYS_SRAM_BASE + CONFIG_SYS_SRAM_SIZE), %sp*/
 	move.l  #(CFG_SYS_INIT_RAM_ADDR + CFG_SYS_INIT_RAM_SIZE), %sp
-	/*move.l  #(SYS_INIT_SP_ADDR), %sp*/
 
 	/*
 	 * if configured, malloc_f arena will be reserved first,
