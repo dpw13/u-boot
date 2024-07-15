@@ -27,7 +27,7 @@
 #define CFG_SYS_INIT_RAM_SIZE	CONFIG_SYS_SRAM_SIZE
 
 /* memory map space for linux boot data */
-#define CFG_SYS_BOOTMAPSZ		(8 << 20)
+#define CFG_SYS_BOOTMAPSZ		(16 << 20)
 
 /* Static locations for cache status */
 #define ICACHE_STATUS			(CFG_SYS_INIT_RAM_ADDR + \
@@ -42,5 +42,26 @@
 
 #define CFG_SYS_DCACHE_INV           (M68K_CACR_CD)
 #define CFG_SYS_CACHE_DCACR          (M68K_CACR_ED)
+
+/* POST options */
+#define CFG_POST (CFG_SYS_POST_MEMORY|CFG_SYS_POST_MEM_REGIONS)
+#define CFG_SYS_POST_WORD_ADDR	(0x1000)
+
+/* Boot options */
+#define BOOTENV_DEV_NAME_NET(devtypeu, devtypel, instance) \
+	"net "
+#define BOOTENV_DEV_NET(devtypeu, devtypel, instance) \
+	"bootcmd_net=run download_fit; bootm\0"
+
+#define BOOT_TARGET_DEVICES(func) \
+	func(NET, net, na)
+#include <config_distro_bootcmd.h>
+
+#define CFG_EXTRA_ENV_SETTINGS       \
+	"loadaddr=0x06000000\0"		\
+	"serverip=192.168.1.125\0"	\
+	"bootfile=tenkon.itb\0"	\
+	"download_fit=dhcp; tftp ${loadaddr} ${bootfile}\0" \
+	BOOTENV
 
 #endif  /* __TENKON_CONFIG_H */

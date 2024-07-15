@@ -389,6 +389,8 @@ static int memory_post_test_lines(unsigned long start, unsigned long size)
 {
 	int ret = 0;
 
+	post_log("memory_post_test_lines %08x %08x\n", start, size);
+
 	ret = memory_post_dataline((unsigned long long *)start);
 	schedule();
 	if (!ret)
@@ -406,6 +408,8 @@ static int memory_post_test_lines(unsigned long start, unsigned long size)
 static int memory_post_test_patterns(unsigned long start, unsigned long size)
 {
 	int ret = 0;
+
+	post_log("memory_post_test_patterns %08x %08x\n", start, size);
 
 	ret = memory_post_test1(start, size, 0x00000000);
 	schedule();
@@ -436,13 +440,15 @@ static int memory_post_test_regions(unsigned long start, unsigned long size)
 	unsigned long i;
 	int ret = 0;
 
-	for (i = 0; i < (size >> 20) && (!ret); i++) {
+	post_log("memory_post_test_regions %08x %08x\n", start, size);
+
+	for (i = 0; i < (size >> 22) && (!ret); i++) {
 		if (!ret)
-			ret = memory_post_test_patterns(start + (i << 20),
-				0x800);
+			ret = memory_post_test_patterns(start + (i << 22),
+				0x2000);
 		if (!ret)
-			ret = memory_post_test_patterns(start + (i << 20) +
-				0xff800, 0x800);
+			ret = memory_post_test_patterns(start + (i << 22) +
+				0xff000, 0x2000);
 	}
 
 	return ret;
@@ -472,8 +478,10 @@ int arch_memory_test_prepare(u32 *vstart, u32 *size, phys_addr_t *phys_offset)
 			256 << 20 : gd->ram_size) - (1 << 20);
 
 	/* Limit area to be tested with the board info struct */
+#if 0
 	if ((*vstart) + (*size) > (ulong)bd)
 		*size = (ulong)bd - *vstart;
+#endif
 
 	return 0;
 }

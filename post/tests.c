@@ -114,7 +114,7 @@ struct post_test post_list[] =
 	"Memory test",
 	"memory",
 	"This test checks RAM.",
-	POST_ROM | POST_POWERON | POST_SLOWTEST | POST_PREREL,
+	POST_ROM | POST_POWERON | POST_SLOWTEST | POST_PREREL | POST_MANUAL,
 	&memory_post_test,
 	NULL,
 	NULL,
