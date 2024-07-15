@@ -82,9 +82,8 @@ are GPL, so this is, of course, GPL.
 #define NE2000_BASIC_INIT
 
 #define DP_DATA		0x10
-#define START_PG	0x50	/* First page of TX buffer */
-#define START_PG2	0x48
-#define STOP_PG		0x80	/* Last page +1 of RX ring */
+#define TX_BUF_1    0x40	/* First page of TX buffer */
+#define TX_BUF_2	0x48
 
 #define RX_START	0x50
 #define RX_END		0x80

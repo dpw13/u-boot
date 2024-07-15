@@ -81,37 +81,44 @@ are GPL, so this is, of course, GPL.
 
 /*
  * Debugging details
- *
- * Set to perms of:
- * 0 disables all debug output
- * 1 for process debug output
- * 2 for added data IO output: get_reg, put_reg
- * 4 for packet allocation/free output
- * 8 for only startup status, so we can tell we're installed OK
  */
+#define NE2K_DEBUG_PROCESS	1
+#define NE2K_DEBUG_IO		2
+#define NE2K_DEBUG_PACKET	4
+#define NE2K_DEBUG_LOCK		8
+
 #ifdef DEBUG
-#define NE2K_DEBUG 0xf
+#define NE2K_DEBUG (NE2K_DEBUG_PROCESS)
 #else
 #define NE2K_DEBUG 0
 #endif
 
-#if NE2K_DEBUG & 1
-#define DEBUG_FUNCTION() do { printf("%s\n", __FUNCTION__); } while (0)
-#define DEBUG_LINE() do { printf("%d\n", __LINE__); } while (0)
+#if NE2K_DEBUG & NE2K_DEBUG_PROCESS
+#define DEBUG_FUNCTION() do { printk("%s\n", __FUNCTION__); } while (0)
+#define DEBUG_LINE() do { printk("%d\n", __LINE__); } while (0)
 #else
 #define DEBUG_FUNCTION() do {} while(0)
 #define DEBUG_LINE() do {} while(0)
 #endif
 
+#include <net.h>
 /* timeout for tx/rx in s */
 #include <linux/delay.h>
 #define TOUT 5
 /* Ether MAC address size */
 #define ETHER_ADDR_LEN 6
+/* The number of packet buffers we can store during interrupts */
+#define RX_HEADER_BUF_SIZE 8
 
+/* Can't call udelay from ISR */
+#undef CYGHWR_NS_DP83902A_PLF_BROKEN_TX_DMA
+#undef CYGHWR_NS_DP83902A_PLF_BROKEN_RX_DMA
 
-#define CYGHWR_NS_DP83902A_PLF_BROKEN_TX_DMA 1
+#if 0
 #define CYGACC_CALL_IF_DELAY_US(X) udelay(X)
+#else
+#define CYGACC_CALL_IF_DELAY_US(X)
+#endif
 
 /* H/W infomation struct */
 typedef struct hw_info_t {
@@ -128,26 +135,48 @@ typedef enum {
 	TX_ERR_FIFO,
 } tx_status_t;
 
+typedef struct rx_hdr_t {
+	u8 rx_status;
+	u8 next_pkt_pg;
+	u16 pkt_len;
+} rx_hdr_t;
+
+/* Identical to the above but pkt_len has been endianness adjusted 
+ * the packet start page has been added.
+ */
+typedef struct rx_desc_t {
+	u8 rx_status;
+	u8 next_pkt_pg;
+	u16 pkt_len;
+	u8 rx_pkt_pg;
+} rx_desc_t;
+
 typedef struct dp83902a_priv_data {
 	bool initialized;
 	tx_status_t tx_status;
 	u8* base;
 	u8* data;
-	u8* reset;
-	int tx_next;		/* First free Tx page */
-	int tx_int;		/* Expecting interrupt from this buffer */
-	int rx_next;		/* First free Rx page */
-	int tx1, tx2;		/* Page numbers for Tx buffers */
-	u32 tx1_key, tx2_key;	/* Used to ack when packet sent */
+	u8 tx_next;			/* First free Tx page */
+	int tx_int;				/* Expecting interrupt from this buffer */
+	int tx1, tx2;			/* Page numbers for Tx buffers */
 	int tx1_len, tx2_len;
-	bool tx_started, running, hardwired_esa;
+	bool tx_started, hardwired_esa;
+	u8 rx_next;				/* Location of the next header */
 	u8 esa[6];
-	void* plf_priv;
-	uint8_t *pbuf;
 
-	/* Buffer allocation */
-	int tx_buf1, tx_buf2;
-	int rx_buf_start, rx_buf_end;
+	/* ISR/userspace semaphores */
+	u8 lock;
+	u8 irq_mask;
+
+	/* Driver-local queue of pending rx packets */
+	rx_desc_t rx_hdr_buf[RX_HEADER_BUF_SIZE];
+	u8 rx_hdr_rd, rx_hdr_wr;
+
+	/* U-boot packet buffer tracking */
+	u8 rx_pkt_rd, rx_pkt_wr;
+
+	/* Recovery */
+	u8 broken;
 
 	/* Counters */
 	u64 frame_err_count;
@@ -267,10 +296,10 @@ typedef struct dp83902a_priv_data {
 #define DP_IMR_RxE	0x04	/* Receive error */
 #define DP_IMR_TxE	0x08	/* Transmit error */
 #define DP_IMR_OFLW	0x10	/* Receive overflow */
-#define DP_IMR_CNT	0x20	/* Tall counters need emptying */
+#define DP_IMR_CNT	0x20	/* Tally counters need emptying */
 #define DP_IMR_RDC	0x40	/* Remote DMA complete */
 
-#define DP_IMR_All	0x3F	/* Everything but remote DMA */
+#define DP_IMR_ALL	0x3F	/* Everything but remote DMA */
 
 /* Receiver control register */
 
@@ -312,7 +341,6 @@ typedef struct dp83902a_priv_data {
 #define DP_TSR_CDH	0x40	/* Collision Detect Heartbeat */
 #define DP_TSR_OWC	0x80	/* Collision outside normal window */
 
-#define IEEE_8023_MAX_FRAME	1518	/* Largest possible ethernet frame */
 #define IEEE_8023_MIN_FRAME	64	/* Smallest possible ethernet frame */
 
 /* Functions */
