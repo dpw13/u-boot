@@ -1103,7 +1103,7 @@ static int dw_hdmi_setup(struct dw_hdmi_qp *hdmi,
 	}
 
 	/* Mark uboot hdmi is enabled */
-	hdmi_writel(hdmi, BIT(21), VIDEO_INTERFACE_CONFIG0);
+	hdmi_writel(hdmi, BIT(21), I2CM_INTERFACE_CONTROL0);
 
 	return 0;
 }
