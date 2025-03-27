@@ -171,7 +171,12 @@ static struct reg_data rk817_init_reg[] = {
  * the under-voltage protection will shutdown the LDO3 and reset the PMIC
  */
 	{ RK817_BUCK4_CMIN, 0x6b, 0x6e},
+#if !defined(CONFIG_TARGET_ODROID_M1) && !defined(CONFIG_TARGET_ODROID_M1S)
 	{ RK817_PMIC_SYS_CFG1, 0x20, 0x70},
+#else
+	{ RK817_PMIC_SYS_CFG1,  0x00, 0x77 },	// REG : 0xF1
+	{ 0xf3,  0x02, 0x02 },
+#endif
 	/* Set pmic_sleep as none function */
 	{ RK817_PMIC_SYS_CFG3, 0x00, 0x18 },
 	/* GATE pin function: gate function */
