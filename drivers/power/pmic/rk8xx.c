@@ -770,6 +770,11 @@ static int rk8xx_probe(struct udevice *dev)
 		}
 	}
 
+#if defined(CONFIG_TARGET_ODROID_M1) || defined(CONFIG_TARGET_ODROID_M1S)
+	if ((lsb & 0x0f) == 0x0a)
+		show_variant |= 0x000A;
+#endif
+
 	printf("PMIC:  RK%x ", show_variant);
 
 	if (on_source && off_source) {
@@ -777,6 +782,13 @@ static int rk8xx_probe(struct udevice *dev)
 		rk8xx_read(dev, off_source, &off, 1);
 		printf("(on=0x%02x, off=0x%02x)", on, off);
 	}
+
+#if defined(CONFIG_TARGET_ODROID_M1) || defined(CONFIG_TARGET_ODROID_M1S)
+	rk8xx_read(dev, RK817_PMIC_SYS_CFG1, &value, 1);
+	printf("\n       UV: %d00mV, LO: %d00mV",
+			27 + ((value & 0x7) >> 4), 28 + (value & 0x7));
+#endif
+
 	printf("\n");
 
 	if (pwron_key) {
