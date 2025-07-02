@@ -21,6 +21,8 @@
 
 #if defined(CONFIG_TARGET_ODROID_M1)
 #undef CONFIG_DM_SPI_FLASH
+
+static unsigned int __bus = CONFIG_ENV_SPI_BUS;
 #endif
 
 #ifndef CONFIG_ENV_SPI_BUS
@@ -56,6 +58,10 @@ static struct spi_flash *env_flash;
 
 static int setup_flash_device(void)
 {
+#if defined(CONFIG_TARGET_ODROID_M1)
+	unsigned int bus = __bus;
+#endif
+
 #ifdef CONFIG_DM_SPI_FLASH
 	struct udevice *new;
 	int	ret;
@@ -72,13 +78,34 @@ static int setup_flash_device(void)
 #else
 
 	if (!env_flash) {
+#if defined(CONFIG_TARGET_ODROID_M1)
+		env_flash = spi_flash_probe(bus,
+			CONFIG_ENV_SPI_CS,
+			CONFIG_ENV_SPI_MAX_HZ, CONFIG_ENV_SPI_MODE);
+		if (!env_flash) {
+			for (bus = 0; bus <= 4; bus++) {
+				env_flash = spi_flash_probe(bus,
+						CONFIG_ENV_SPI_CS,
+						CONFIG_ENV_SPI_MAX_HZ, CONFIG_ENV_SPI_MODE);
+
+				if (env_flash)
+					break;
+			}
+		}
+#else
 		env_flash = spi_flash_probe(CONFIG_ENV_SPI_BUS,
 			CONFIG_ENV_SPI_CS,
 			CONFIG_ENV_SPI_MAX_HZ, CONFIG_ENV_SPI_MODE);
+#endif
 		if (!env_flash) {
 			set_default_env("!spi_flash_probe() failed");
 			return -EIO;
 		}
+
+#if defined(CONFIG_TARGET_ODROID_M1)
+		if (__bus != bus)
+			__bus = bus;
+#endif
 	}
 #endif
 	return 0;

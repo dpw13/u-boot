@@ -80,7 +80,12 @@ static ulong bytes_per_second(unsigned int len, ulong start_ms)
 
 static int do_spi_flash_probe(int argc, char * const argv[])
 {
+#if defined(CONFIG_TARGET_ODROID_M1)
+	static unsigned int __bus = CONFIG_SF_DEFAULT_BUS;
+	unsigned int bus = __bus;
+#else
 	unsigned int bus = CONFIG_SF_DEFAULT_BUS;
+#endif
 	unsigned int cs = CONFIG_SF_DEFAULT_CS;
 	/* In DM mode, defaults speed and mode will be taken from DT */
 	unsigned int speed = CONFIG_SF_DEFAULT_SPEED;
@@ -127,6 +132,15 @@ static int do_spi_flash_probe(int argc, char * const argv[])
 	}
 	flash = NULL;
 	ret = spi_flash_probe_bus_cs(bus, cs, speed, mode, &new);
+#if defined(CONFIG_TARGET_ODROID_M1)
+	if (ret) {
+		for (bus = 0; bus <= 4; bus++) {
+			ret = spi_flash_probe_bus_cs(bus, cs, speed, mode, &new);
+			if (!ret)
+				break;
+		}
+	}
+#endif
 	if (ret) {
 		printf("Failed to initialize SPI flash at %u:%u (error %d)\n",
 		       bus, cs, ret);
@@ -141,12 +155,26 @@ static int do_spi_flash_probe(int argc, char * const argv[])
 	new = spi_flash_probe(bus, cs, speed, mode);
 	flash = new;
 
+#if defined(CONFIG_TARGET_ODROID_M1)
+	if (!new) {
+		for (bus = 0; bus <= 4; bus++) {
+			new = spi_flash_probe(bus, cs, speed, mode);
+			if (new)
+				break;
+		}
+	}
+#endif
 	if (!new) {
 		printf("Failed to initialize SPI flash at %u:%u\n", bus, cs);
 		return 1;
 	}
 
 	flash = new;
+#endif
+
+#if defined(CONFIG_TARGET_ODROID_M1)
+	if (__bus != bus)
+		__bus = bus;
 #endif
 
 	return 0;
