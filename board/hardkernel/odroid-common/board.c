@@ -451,16 +451,19 @@ static int set_bmp_logo(const char *bmp_name, void *addr, int flip)
 
 int misc_init_r(void)
 {
-	struct blk_desc *dev_desc = rockchip_get_bootdev();
 	void *decomp;
 	struct bmp_image *bmp;
 	unsigned int loadaddr = (unsigned int)env_get_ulong("loadaddr", 16, 0);
 	unsigned long len;
 	char *logofile = "boot-logo.bmp.gz";
+	int ret;
 
-	int ret = load_from_mmc(loadaddr, dev_desc->devnum, 1, logofile);
-	if (ret)
-		ret = load_from_cramfs(load_addr, logofile);
+	ret = load_from_mmc(loadaddr, 0, 1, logofile);		// eMMC
+	if (ret) {
+		ret = load_from_mmc(loadaddr, 1, 1, logofile);	// SD card
+		if (ret)
+			ret = load_from_cramfs(load_addr, logofile);
+	}
 
 	if (ret)
 		return 0;	// No boot logo file in memory card
