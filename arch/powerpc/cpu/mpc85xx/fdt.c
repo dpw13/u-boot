@@ -258,7 +258,7 @@ static inline void ft_fixup_l2cache(void *blob)
 
 	off = fdt_node_offset_by_prop_value(blob, -1, "device_type", "cpu", 4);
 	if (off < 0) {
-		debug("no cpu node fount\n");
+		debug("no cpu node found\n");
 		return;
 	}
 
