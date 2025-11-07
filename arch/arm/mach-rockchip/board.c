@@ -937,6 +937,7 @@ int bootm_board_start(void)
 
 int bootm_image_populate_dtb(void *img)
 {
+	printf("bootm_image_populate_dtb: %p\n", img);
 	if ((gd->flags & GD_FLG_KDTB_READY) && !gd->fdt_blob_kern)
 		sysmem_free((phys_addr_t)gd->fdt_blob);
 	else
@@ -1250,11 +1251,14 @@ static void bootargs_add_android(bool verbose)
 	char *fwver;
 
 	hdr = (void *)env_get_ulong("android_addr_r", 16, 0);
+	/* FIXME: Why on earth would you want to just remove all the androidboot vars??? */
 	if (hdr && !android_image_check_header(hdr) && hdr->header_version >= 4) {
+#if 0
 		if (env_update_extract_subset("bootargs", "andr_bootargs", "androidboot."))
 			printf("extract androidboot.xxx error\n");
 		if (verbose)
 			printf("## bootargs(android): %s\n\n", env_get("andr_bootargs"));
+#endif
 
 		/* for kernel cmdline can be read */
 		fwver = env_get("fwver");
@@ -1350,7 +1354,7 @@ static void bootargs_add_dtb_dtbo(void *fdt, bool verbose)
 
 char *board_fdt_chosen_bootargs(void *fdt)
 {
-	int verbose = is_hotkey(HK_CMDLINE);
+	int verbose = 1;
 	const char *bootargs;
 
 	/* debug */
