@@ -612,8 +612,10 @@ int rockchip_ram_read_dtb_file(void *img, void *fdt)
 	int format;
 	int ret;
 
-	if (!fdt_check_header(fdt))
+	if (!fdt_check_header(fdt)) {
+		printf("rockchip_ram_read_dtb_file: no fdt header\n");
 		return 0;
+	}
 
 	format = (genimg_get_format(img));
 #ifdef CONFIG_ANDROID_BOOT_IMAGE

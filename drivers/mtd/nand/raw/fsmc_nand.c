@@ -328,7 +328,7 @@ void fsmc_enable_hwecc(struct mtd_info *mtd, int mode)
  * @oob_required:	caller expects OOB data read to chip->oob_poi
  * @page:	page number to read
  *
- * This routine is needed for fsmc verison 8 as reading from NAND chip has to be
+ * This routine is needed for fsmc version 8 as reading from NAND chip has to be
  * performed in a strict sequence as follows:
  * data(512 byte) -> ecc(13 byte)
  * After this read, fsmc hardware generates and reports error data bits(upto a

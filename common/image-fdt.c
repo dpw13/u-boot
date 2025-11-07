@@ -344,7 +344,7 @@ error:
  * boot_get_fdt() is responsible for finding a valid flat device tree image.
  * Curently supported are the following ramdisk sources:
  *      - multicomponent kernel/ramdisk image,
- *      - commandline provided address of decicated ramdisk image.
+ *      - commandline provided address of dedicated ramdisk image.
  *
  * returns:
  *     0, if fdt image was found and valid, or skipped

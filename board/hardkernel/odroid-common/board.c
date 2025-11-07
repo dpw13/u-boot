@@ -309,6 +309,7 @@ static int load_boot_config(struct blk_desc *dev_desc, char *config)
 	if (ret)
 		return ret;
 
+	printf("Loading config.ini into 0x%lx", loadaddr);
 	run_command("ini generic $loadaddr", 0);
 
 	char *overlay_profile = env_get("overlay_profile");
@@ -327,6 +328,8 @@ int board_read_dtb_file(void *fdt_addr)
 	char *rootptr = NULL;
 	char *dir = NULL;
 	int ret;
+
+	printf("board_read_dtb_file %s into %p\n", CONFIG_ROCKCHIP_EARLY_DISTRO_DTB_PATH, fdt_addr);
 
 	ret = load_from_cramfs((unsigned long)fdt_addr, CONFIG_ROCKCHIP_EARLY_DISTRO_DTB_PATH);
 	if (ret) {
@@ -352,8 +355,10 @@ int board_read_dtb_file(void *fdt_addr)
 		for (i = 0; i < ARRAY_SIZE(paths); i++) {
 			ret = load_from_mmc((unsigned long)fdt_addr,
 					dev_desc->devnum, 1, paths[i]);
-			if (!ret)
+			if (!ret) {
+				printf("Read %s to %p\n", paths[i], fdt_addr);
 				break;
+			}
 		}
 
 		if (ret)
@@ -368,6 +373,7 @@ int board_read_dtb_file(void *fdt_addr)
 		int offset = 0;
 
 		while (token != NULL) {
+			printf("Applying overlay %s\n", token);
 			dtoverlay_apply(fdt_addr, token, dev_desc, rootptr, &dir);
 			offset += strlen(token) + 1;
 			token = strtok(overlays + offset, " ");

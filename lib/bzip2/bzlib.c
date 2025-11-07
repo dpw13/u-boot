@@ -1522,7 +1522,7 @@ int BZ_API(BZ2_bzwrite) (BZFILE* b, void* buf, int len )
    BZ2_bzWrite(&bzerr,b,buf,len);
    if(bzerr == BZ_OK){
       return len;
-   }else{
+   } else {
       return -1;
    }
 }
@@ -1548,7 +1548,7 @@ void BZ_API(BZ2_bzclose) (BZFILE* b)
       if(bzerr != BZ_OK){
 	 BZ2_bzWriteClose(NULL,b,1,NULL,NULL);
       }
-   }else{
+   } else {
       BZ2_bzReadClose(&bzerr,b);
    }
    if(fp!=stdin && fp!=stdout){

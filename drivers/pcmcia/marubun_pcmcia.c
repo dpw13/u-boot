@@ -49,11 +49,11 @@ int pcmcia_on (void)
 	if ((inw(MRSHPC_CSR) & 0x000c) == 0){	/* if card detect is true */
 		if ((inw(MRSHPC_CSR) & 0x0080) == 0){
 			outw(0x0674 ,MRSHPC_CPWCR);  /* Card Vcc is 3.3v? */
-		}else{
+		} else {
 			outw(0x0678 ,MRSHPC_CPWCR);  /* Card Vcc is 5V */
 		}
 		udelay( 100000 );   /* wait for power on */
-	}else{
+	} else {
 		return 1;
 	}
 	/*

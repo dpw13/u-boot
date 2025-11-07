@@ -313,21 +313,21 @@ int test_hash_perf(struct udevice *dev, u32 algo,
 		ret = crypto_sha_init(dev, &ctx);
 
 	if (ret) {
-		printf("crypto_sha_init error ret = %d!\n", ret);
+		pr_err("%s: crypto_sha_init error ret = %d", dev->name, ret);
 		goto exit;
 	}
 
 	for (i = 0; i < total_size / data_size; i++) {
 		ret = crypto_sha_update(dev, (u32 *)data, data_size);
 		if (ret) {
-			printf("crypto_sha_update error!\n");
+			pr_err("%s: crypto_sha_update error = %d", dev->name, ret);
 			goto exit;
 		}
 	}
 
 	ret = crypto_sha_final(dev, &ctx, hash_out);
 	if (ret) {
-		printf("crypto_sha_final error ret = %d!\n", ret);
+		pr_err("%s: crypto_sha_final error ret = %d", dev->name, ret);
 		goto exit;
 	}
 

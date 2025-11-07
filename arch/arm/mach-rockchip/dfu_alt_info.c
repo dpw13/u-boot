@@ -14,8 +14,10 @@ static char *get_dfu_alt(char *interface, char *devstr)
 {
 	struct blk_desc *dev_desc;
 	char *alt_boot;
+#ifdef CONFIG_DFU_MTD
 #ifdef CONFIG_ANDROID_AB
 	char current_slot[3] = {0};
+#endif
 #endif
 
 	dev_desc = rockchip_get_bootdev();

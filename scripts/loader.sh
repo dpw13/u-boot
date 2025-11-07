@@ -6,6 +6,7 @@
 #
 
 set -e
+#set -x
 
 if [ $# -eq 0 ]; then
 	echo "ERROR: No args of $0"

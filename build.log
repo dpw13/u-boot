@@ -1,0 +1,2030 @@
+++ sed -n 'N;/processor/p' /proc/cpuinfo
+++ wc -l
++ JOB=144
+++ ls configs/android6.0-rk3399_defconfig configs/dserve_dsrv9703c_defconfig configs/evb-aarch32-rk3308_defconfig configs/evb-px30_defconfig configs/evb-rk3036_defconfig configs/evb-rk3066_defconfig configs/evb-rk3128_defconfig configs/evb-rk3229_defconfig configs/evb-rk3288_defconfig configs/evb-rk3288-rk1608_defconfig configs/evb-rk3308_defconfig configs/evb-rk3326_defconfig configs/evb-rk3328_defconfig configs/evb-rk3399_defconfig configs/evb-rv1108_defconfig configs/fennec-rk3288_defconfig configs/firefly-rk3288_defconfig configs/firefly-rk3399_defconfig configs/gva-rk3229_defconfig configs/kylin-rk3036_defconfig configs/lion-rk3368_defconfig configs/miqi-rk3288_defconfig configs/nokia_rx51_defconfig configs/odroid_rk3566_defconfig configs/odroid_rk3568_defconfig configs/odroid_rk3588s_defconfig configs/phycore-rk3288_defconfig configs/popmetal-rk3288_defconfig configs/puma-rk3399_defconfig configs/px30_defconfig configs/px30-tb_defconfig configs/rk1806_defconfig configs/rk1808_defconfig configs/rk3036_defconfig configs/rk3126_defconfig configs/rk3128_defconfig configs/rk3128x_defconfig configs/rk322x_defconfig configs/rk3288_defconfig configs/rk3308-aarch32-amp_defconfig configs/rk3308-aarch32_defconfig configs/rk3308_defconfig configs/rk3326-aarch32_defconfig configs/rk3326_defconfig configs/rk3328_defconfig configs/rk3368_defconfig configs/rk3399_defconfig configs/rk3399pro_defconfig configs/rk3528_defconfig configs/rk3562_defconfig configs/rk3568_defconfig configs/rk3568-pcie-ep_defconfig configs/rk3568-spl-spi-nand_defconfig configs/rk3588_defconfig configs/rk3588-qnx_defconfig configs/rv1106_defconfig configs/rv1106-emmc-tb_defconfig configs/rv1106-emmc-tb-nofastae_defconfig configs/rv1106-spi-nand-tb-nofastae_defconfig configs/rv1106-spi-nor_defconfig configs/rv1106-spi-nor-tb_defconfig configs/rv1106-spi-nor-tb-nofastae_defconfig configs/rv1126_defconfig configs/rv1126-spi-nor-tiny_defconfig configs/rv1126-spl-slc-nand_defconfig configs/rv1126-spl-spi-nand_defconfig configs/sheep-rk3368_defconfig configs/tinker-rk3288_defconfig configs/vyasa-rk3288_defconfig
++ SUPPORT_LIST='configs/android6.0-rk3399_defconfig
+configs/dserve_dsrv9703c_defconfig
+configs/evb-aarch32-rk3308_defconfig
+configs/evb-px30_defconfig
+configs/evb-rk3036_defconfig
+configs/evb-rk3066_defconfig
+configs/evb-rk3128_defconfig
+configs/evb-rk3229_defconfig
+configs/evb-rk3288_defconfig
+configs/evb-rk3288-rk1608_defconfig
+configs/evb-rk3308_defconfig
+configs/evb-rk3326_defconfig
+configs/evb-rk3328_defconfig
+configs/evb-rk3399_defconfig
+configs/evb-rv1108_defconfig
+configs/fennec-rk3288_defconfig
+configs/firefly-rk3288_defconfig
+configs/firefly-rk3399_defconfig
+configs/gva-rk3229_defconfig
+configs/kylin-rk3036_defconfig
+configs/lion-rk3368_defconfig
+configs/miqi-rk3288_defconfig
+configs/nokia_rx51_defconfig
+configs/odroid_rk3566_defconfig
+configs/odroid_rk3568_defconfig
+configs/odroid_rk3588s_defconfig
+configs/phycore-rk3288_defconfig
+configs/popmetal-rk3288_defconfig
+configs/puma-rk3399_defconfig
+configs/px30_defconfig
+configs/px30-tb_defconfig
+configs/rk1806_defconfig
+configs/rk1808_defconfig
+configs/rk3036_defconfig
+configs/rk3126_defconfig
+configs/rk3128_defconfig
+configs/rk3128x_defconfig
+configs/rk322x_defconfig
+configs/rk3288_defconfig
+configs/rk3308-aarch32-amp_defconfig
+configs/rk3308-aarch32_defconfig
+configs/rk3308_defconfig
+configs/rk3326-aarch32_defconfig
+configs/rk3326_defconfig
+configs/rk3328_defconfig
+configs/rk3368_defconfig
+configs/rk3399_defconfig
+configs/rk3399pro_defconfig
+configs/rk3528_defconfig
+configs/rk3562_defconfig
+configs/rk3568_defconfig
+configs/rk3568-pcie-ep_defconfig
+configs/rk3568-spl-spi-nand_defconfig
+configs/rk3588_defconfig
+configs/rk3588-qnx_defconfig
+configs/rv1106_defconfig
+configs/rv1106-emmc-tb_defconfig
+configs/rv1106-emmc-tb-nofastae_defconfig
+configs/rv1106-spi-nand-tb-nofastae_defconfig
+configs/rv1106-spi-nor_defconfig
+configs/rv1106-spi-nor-tb_defconfig
+configs/rv1106-spi-nor-tb-nofastae_defconfig
+configs/rv1126_defconfig
+configs/rv1126-spi-nor-tiny_defconfig
+configs/rv1126-spl-slc-nand_defconfig
+configs/rv1126-spl-spi-nand_defconfig
+configs/sheep-rk3368_defconfig
+configs/tinker-rk3288_defconfig
+configs/vyasa-rk3288_defconfig'
++ CMD_ARGS=odroid_rk3588s
++ RKBIN_TOOLS=../rkbin/tools
++ grep -q '^CONFIG_ARM32=y' .config
++++ which aarch64-linux-gnu-gcc
+++ dirname /usr/bin/aarch64-linux-gnu-gcc
++ CROSS_COMPILE_ARM64=/usr/bin/bin
++ RKCHIP=
++ RKCHIP_LABEL=
++ RKCHIP_LOADER=
++ RKCHIP_TRUST=
++ INI_TRUST=
++ INI_LOADER=
++ RKBIN=
++ TOOLCHAIN=
++ TOOLCHAIN_NM=
++ TOOLCHAIN_OBJDUMP=
++ TOOLCHAIN_ADDR2LINE=
++ PLAT_RSA=
++ PLAT_SHA=
++ PLAT_UBOOT_SIZE=
++ PLAT_TRUST_SIZE=
++ PLAT_TYPE=RKFW
+++ pwd
++ SRCTREE=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk
++ SCRIPT_FIT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/fit.sh
++ SCRIPT_ATF=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/atf.sh
++ SCRIPT_TOS=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/tos.sh
++ SCRIPT_SPL=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/spl.sh
++ SCRIPT_UBOOT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/uboot.sh
++ SCRIPT_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/loader.sh
++ SCRIPT_DECOMP=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/decomp.sh
++ SCRIPT_CHECKCONFIG=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/check-rkconfig.sh
++ CC_FILE=.cc
++ REP_DIR=./rep
++ process_args odroid_rk3588s
++ '[' 1 -gt 0 ']'
++ case $1 in
+++ /home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/fit.sh --args odroid_rk3588s
++ source ./scripts/fit-core.sh
+++ set -e
+++ FIT_DIR=fit
+++ IMG_UBOOT=uboot.img
+++ IMG_BOOT=boot.img
+++ IMG_RECOVERY=recovery.img
+++ ITB_UBOOT=fit/uboot.itb
+++ ITB_BOOT=fit/boot.itb
+++ ITB_RECOVERY=fit/recovery.itb
+++ SIG_BIN=data2sign.bin
+++ SIG_UBOOT=fit/uboot.data2sign
+++ SIG_BOOT=fit/boot.data2sign
+++ SIG_RECOVERY=fit/recovery.data2sign
+++ grep -q '^CONFIG_FIT_ENABLE_RSA4096_SUPPORT=y' .config
+++ OFFS_DATA=0x1000
+++ FDT_ADDR_PLACEHOLDER=0xffffff00
+++ KERNEL_ADDR_PLACEHOLDER=0xffffff01
+++ RAMDISK_ADDR_PLACEHOLDER=0xffffff02
+++ MKIMAGE=./tools/mkimage
+++ RK_SIGN_TOOL=rkbin/tools/rk_sign_tool
+++ FIT_UNPACK=./scripts/fit-unpack.sh
+++ CHECK_SIGN=./tools/fit_check_sign
+++ KEY_DIR=keys/
+++ RSA_PRI_KEY=keys/dev.key
+++ RSA_PUB_KEY=keys/dev.pubkey
+++ RSA_CRT_KEY=keys/dev.crt
+++ SIGNATURE_KEY_NODE=/signature/key-dev
+++ SPL_DTB=spl/u-boot-spl.dtb
+++ UBOOT_DTB=u-boot.dtb
+++ ITS_UBOOT=u-boot.its
+++ ITS_BOOT=boot.its
+++ ITS_RECOVERY=recovery.its
+++ ARG_VER_UBOOT=0
+++ ARG_VER_BOOT=0
+++ ARG_VER_RECOVERY=0
++ fit_process_args --args odroid_rk3588s
++ '[' 2 -eq 0 ']'
++ '[' 2 -gt 0 ']'
++ case $1 in
++ ARG_VALIDATE=odroid_rk3588s
++ shift 2
++ '[' 0 -gt 0 ']'
++ grep -q '^CONFIG_FIT_SIGNATURE=y' .config
++ '[' '!' -z odroid_rk3588s ']'
++ validate_arg odroid_rk3588s
++ case $1 in
++ shift=0
++ echo 0
++ NUM=0
++ '[' 0 -ne 0 ']'
+++ echo odroid_rk3588s
+++ sed 's/[0-9,a-f,A-F,x,X,-]//g'
++ '[' -z oroi_rks ']'
++ ARG_BOARD=odroid_rk3588s
++ '[' '!' -f configs/odroid_rk3588s_defconfig -a '!' -f configs/odroid_rk3588s.config ']'
++ '[' -f configs/odroid_rk3588s.config ']'
++ MAKE_CMD='make odroid_rk3588s_defconfig -j144'
++ echo '## make odroid_rk3588s_defconfig -j144'
+## make odroid_rk3588s_defconfig -j144
++ make odroid_rk3588s_defconfig
+#
+# configuration written to .config
+#
++ rm -f .cc
++ shift 1
++ '[' 0 -gt 0 ']'
++ '[' '!' -f .config ']'
++ prepare
++ '[' -d ../rkbin/tools ']'
++++ dirname ../rkbin/tools
+++ cd ../rkbin
+++ pwd
++ absolute_path=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ RKBIN=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ grep -Eq '^CONFIG_ARM64=y|^CONFIG_ARM64_BOOT_AARCH32=y' .config
++ ARM64_TRUSTZONE=y
++ grep -q '^CONFIG_ROCKCHIP_FIT_IMAGE_PACK=y' .config
++ PLAT_TYPE=FIT
++ select_toolchain
++ '[' '' '!=' y ']'
++ '[' -f .cc ']'
++ grep -q '^CONFIG_ARM64=y' .config
++++ dirname /usr/bin/bin
+++ cd /usr/bin
+++ pwd
++ CROSS_COMPILE_ARM64=/usr/bin/aarch64-linux-gnu-
++ grep -q '^CONFIG_ARM64=y' .config
++ TOOLCHAIN=/usr/bin/aarch64-linux-gnu-
++ TOOLCHAIN_NM=/usr/bin/aarch64-linux-gnu-nm
++ TOOLCHAIN_OBJDUMP=/usr/bin/aarch64-linux-gnu-objdump
++ TOOLCHAIN_ADDR2LINE=/usr/bin/aarch64-linux-gnu-addr2line
+++ which /usr/bin/aarch64-linux-gnu-gcc
++ '[' '!' /usr/bin/aarch64-linux-gnu-gcc ']'
++ '[' '' == y ']'
++ select_chip_info
++ CHIP_PATTERN='^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}'
+++ egrep -o '^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}' .config
++ RKCHIP=CONFIG_ROCKCHIP_RK3588
++ RKCHIP=RK3588
++ RKCHIP_LOADER=RK3588
++ RKCHIP_TRUST=RK3588
+++ filt_val CONFIG_CHIP_NAME .config
+++ sed -n /CONFIG_CHIP_NAME=/s/CONFIG_CHIP_NAME=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ RKCHIP_LABEL=
++ '[' -z '' ']'
++ RKCHIP_LABEL=RK3588
++ fixup_platform_configure
+++ filt_val CONFIG_UBOOT_SIZE_KB .config
+++ sed -n /CONFIG_UBOOT_SIZE_KB=/s/CONFIG_UBOOT_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ U_KB=
+++ filt_val CONFIG_UBOOT_NUM .config
+++ tr -d '\r'
+++ sed -n /CONFIG_UBOOT_NUM=/s/CONFIG_UBOOT_NUM=//p .config
+++ tr -d '"'
++ U_NUM=
+++ filt_val CONFIG_TRUST_SIZE_KB .config
+++ sed -n /CONFIG_TRUST_SIZE_KB=/s/CONFIG_TRUST_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_KB=
+++ filt_val CONFIG_TRUST_NUM .config
+++ sed -n /CONFIG_TRUST_NUM=/s/CONFIG_TRUST_NUM=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_NUM=
+++ filt_val CONFIG_TRUST_SHA_MODE .config
+++ sed -n /CONFIG_TRUST_SHA_MODE=/s/CONFIG_TRUST_SHA_MODE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ SHA=
+++ filt_val CONFIG_TRUST_RSA_MODE .config
+++ sed -n /CONFIG_TRUST_RSA_MODE=/s/CONFIG_TRUST_RSA_MODE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ RSA=
++ PLAT_UBOOT_SIZE='--size  '
++ PLAT_TRUST_SIZE='--size  '
++ PLAT_SHA='--sha '
++ PLAT_RSA='--rsa '
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ select_ini_file
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM1.ini
++ '[' y == y ']'
++ INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ filt_val CONFIG_LOADER_INI .config
+++ sed -n /CONFIG_LOADER_INI=/s/CONFIG_LOADER_INI=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ NAME=RK3588-ODROIDM2.ini
++ '[' '!' -z RK3588-ODROIDM2.ini ']'
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ filt_val CONFIG_TRUST_INI .config
+++ sed -n /CONFIG_TRUST_INI=/s/CONFIG_TRUST_INI=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ NAME=
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ handle_args_late
++ ARG_LIST_FIT=' --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini'
++ sub_commands
++ [[ odroid_rk3588s != --* ]]
++ CMD=odroid_rk3588s
++ ARG=odroid_rk3588s
++ '[' '' == tpl -o '' == spl ']'
++ ELF=u-boot
++ MAP=u-boot.map
++ SYM=u-boot.sym
++ case ${CMD} in
++ unwind_addr_or_continue
++ FUNCADDR=
++ RELOCOFF=
++ FUNCADDR=
+++ echo
+++ sed 's/[0-9,a-f,A-F,x,X,-]//g'
++ '[' -z ']'
++ '[' ']'
++ clean_files
++ rm spl/u-boot-spl.dtb tpl/u-boot-tpl.dtb u-boot.dtb -f
++ rm spl/u-boot-spl tpl/u-boot-tpl u-boot -f
++ make CROSS_COMPILE=/usr/bin/aarch64-linux-gnu- all --jobs=144
+scripts/kconfig/conf  --silentoldconfig Kconfig
+  CHK     include/config.h
+  CFG     u-boot.cfg
+  GEN     include/autoconf.mk.dep
+  CFG     spl/u-boot.cfg
+  CFG     tpl/u-boot.cfg
+  GEN     include/autoconf.mk
+  GEN     spl/include/autoconf.mk
+  GEN     tpl/include/autoconf.mk
+  CHK     include/config/uboot.release
+  CHK     include/generated/timestamp_autogenerated.h
+  UPD     include/generated/timestamp_autogenerated.h
+  CHK     include/config.h
+  CFG     u-boot.cfg
+  CHK     include/generated/version_autogenerated.h
+  CHK     include/generated/generic-asm-offsets.h
+  CHK     include/generated/asm-offsets.h
+  HOSTCC  tools/mkenvimage.o
+  HOSTCC  tools/fit_image.o
+  HOSTCC  tools/image-host.o
+  HOSTCC  tools/dumpimage.o
+  HOSTCC  tools/mkimage.o
+  HOSTLD  tools/mkenvimage
+  HOSTLD  tools/dumpimage
+  HOSTLD  tools/mkimage
+  CC      arch/arm/cpu/armv8/fwcall.o
+  CC      arch/arm/mach-rockchip/board.o
+  LD      arch/arm/cpu/armv8/built-in.o
+  CC      drivers/usb/gadget/f_fastboot.o
+  CC      common/main.o
+  CC      cmd/version.o
+  LD      cmd/built-in.o
+  LD      common/built-in.o
+  CC      lib/smbios.o
+  CC      lib/display_options.o
+  CC      lib/efi_loader/helloworld.o
+  LD      lib/efi_loader/helloworld.so
+/usr/bin/aarch64-linux-gnu-ld.bfd: warning: lib/efi_loader/helloworld.so has a LOAD segment with RWX permissions
+  OBJCOPY lib/efi_loader/helloworld.efi
+  LD      lib/built-in.o
+  LD      arch/arm/mach-rockchip/built-in.o
+  LD      drivers/usb/gadget/built-in.o
+  LD      u-boot
+/usr/bin/aarch64-linux-gnu-ld.bfd: warning: u-boot has a LOAD segment with RWX permissions
+  OBJCOPY u-boot.srec
+  OBJCOPY u-boot-nodtb.bin
+  SYM     u-boot.sym
+make[2]: 'arch/arm/dts/rk3588s-odroid-m2.dtb' is up to date.
+start=$(/usr/bin/aarch64-linux-gnu-nm u-boot | grep __rel_dyn_start | cut -f 1 -d ' '); end=$(/usr/bin/aarch64-linux-gnu-nm u-boot | grep __rel_dyn_end | cut -f 1 -d ' '); tools/relocate-rela u-boot-nodtb.bin 0x00200000 $start $end
+  COPY    u-boot.dtb
+  CAT     u-boot-dtb.bin
+  MKIMAGE u-boot.img
+  MKIMAGE u-boot-dtb.img
+  COPY    u-boot.bin
+  ALIGN   u-boot.bin
+  COPY    spl/u-boot-spl.dtb
+  CC      tpl/arch/arm/mach-rockchip/tpl.o
+  CC      spl/common/spl/spl.o
+  CC      spl/arch/arm/cpu/armv8/fwcall.o
+  CC      spl/arch/arm/mach-rockchip/spl.o
+  CC      tpl/arch/arm/cpu/armv8/fwcall.o
+  CC      spl/lib/display_options.o
+  LD      tpl/arch/arm/cpu/armv8/built-in.o
+  LD      spl/arch/arm/cpu/armv8/built-in.o
+  LD      tpl/arch/arm/mach-rockchip/built-in.o
+  LD      spl/arch/arm/mach-rockchip/built-in.o
+  LD      spl/common/spl/built-in.o
+  LD      spl/lib/built-in.o
+  LD      tpl/u-boot-tpl
+/usr/bin/aarch64-linux-gnu-ld.bfd: warning: u-boot-tpl has a LOAD segment with RWX permissions
+  OBJCOPY tpl/u-boot-tpl-nodtb.bin
+  COPY    tpl/u-boot-tpl.bin
+  LD      spl/u-boot-spl
+/usr/bin/aarch64-linux-gnu-ld.bfd: warning: u-boot-spl has a LOAD segment with RWX permissions
+  OBJCOPY spl/u-boot-spl-nodtb.bin
+  CAT     spl/u-boot-spl-dtb.bin
+  COPY    spl/u-boot-spl.bin
+  CFGCHK  u-boot.cfg
++ pack_idblock
++ INI=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ '[' '!' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
+++ grep _common.h: include/autoconf.mk.dep
+++ awk -F / '{ printf $3 }'
++ COMMON_H=rk3588_common.h:
++ PLAT=rk3588
+++ filt_val FlashBoot /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ sed -n /FlashBoot=/s/FlashBoot=//p /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ tr -d '\r'
+++ tr -d '"'
++ SPL_BIN=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/../uboot-hk/spl/u-boot-spl.bin
+++ filt_val FlashData /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ sed -n /FlashData=/s/FlashData=//p /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ tr -d '\r'
+++ tr -d '"'
++ TPL_BIN=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.15.bin
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ rm idblock.bin -f
++ ./tools/mkimage -n rk3588 -T rksd -d /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.15.bin:/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/../uboot-hk/spl/u-boot-spl.bin idblock.bin
+Image Type:   Rockchip RK35 boot image
+Init Data Size: 73728 bytes
+Boot Data Size: 165888 bytes
++ echo Input:
+Input:
++ echo '    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini'
+    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ echo '    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.15.bin'
+    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.15.bin
++ echo '    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/../uboot-hk/spl/u-boot-spl.bin'
+    /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/../uboot-hk/spl/u-boot-spl.bin
++ echo
+
++ echo 'Pack rk3588 idblock.bin okay!'
+Pack rk3588 idblock.bin okay!
++ echo
+
++ pack_images
++ '[' '' '!=' y ']'
++ '[' FIT == FIT ']'
++ pack_fit_image --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ which dtc
++ '[' '' == y ']'
++ rm uboot.img 'trust*.img' -rf
++ /home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/fit.sh --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini --chip RK3588
++ source ./scripts/fit-core.sh
+++ set -e
+++ FIT_DIR=fit
+++ IMG_UBOOT=uboot.img
+++ IMG_BOOT=boot.img
+++ IMG_RECOVERY=recovery.img
+++ ITB_UBOOT=fit/uboot.itb
+++ ITB_BOOT=fit/boot.itb
+++ ITB_RECOVERY=fit/recovery.itb
+++ SIG_BIN=data2sign.bin
+++ SIG_UBOOT=fit/uboot.data2sign
+++ SIG_BOOT=fit/boot.data2sign
+++ SIG_RECOVERY=fit/recovery.data2sign
+++ grep -q '^CONFIG_FIT_ENABLE_RSA4096_SUPPORT=y' .config
+++ OFFS_DATA=0x1000
+++ FDT_ADDR_PLACEHOLDER=0xffffff00
+++ KERNEL_ADDR_PLACEHOLDER=0xffffff01
+++ RAMDISK_ADDR_PLACEHOLDER=0xffffff02
+++ MKIMAGE=./tools/mkimage
+++ RK_SIGN_TOOL=rkbin/tools/rk_sign_tool
+++ FIT_UNPACK=./scripts/fit-unpack.sh
+++ CHECK_SIGN=./tools/fit_check_sign
+++ KEY_DIR=keys/
+++ RSA_PRI_KEY=keys/dev.key
+++ RSA_PUB_KEY=keys/dev.pubkey
+++ RSA_CRT_KEY=keys/dev.crt
+++ SIGNATURE_KEY_NODE=/signature/key-dev
+++ SPL_DTB=spl/u-boot-spl.dtb
+++ UBOOT_DTB=u-boot.dtb
+++ ITS_UBOOT=u-boot.its
+++ ITS_BOOT=boot.its
+++ ITS_RECOVERY=recovery.its
+++ ARG_VER_UBOOT=0
+++ ARG_VER_BOOT=0
+++ ARG_VER_RECOVERY=0
++ fit_process_args --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini --chip RK3588
++ '[' 6 -eq 0 ']'
++ '[' 6 -gt 0 ']'
++ case $1 in
++ ARG_INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ shift 2
++ '[' 4 -gt 0 ']'
++ case $1 in
++ ARG_INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ shift 2
++ '[' 2 -gt 0 ']'
++ case $1 in
++ ARG_CHIP=RK3588
++ shift 2
++ '[' 0 -gt 0 ']'
++ grep -q '^CONFIG_FIT_SIGNATURE=y' .config
++ '[' '!' -z '' ']'
++ fit_raw_compile
++ '[' '' == y ']'
++ rm fit -rf
++ mkdir -p fit
++ '[' '!' -z '' ']'
++ '[' '!' -z '' -o '!' -z '' ']'
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini ']'
++ fit_gen_uboot_itb
++ ./make.sh itb /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ sed -n 'N;/processor/p' /proc/cpuinfo
+++ wc -l
++ JOB=144
+++ ls configs/android6.0-rk3399_defconfig configs/dserve_dsrv9703c_defconfig configs/evb-aarch32-rk3308_defconfig configs/evb-px30_defconfig configs/evb-rk3036_defconfig configs/evb-rk3066_defconfig configs/evb-rk3128_defconfig configs/evb-rk3229_defconfig configs/evb-rk3288_defconfig configs/evb-rk3288-rk1608_defconfig configs/evb-rk3308_defconfig configs/evb-rk3326_defconfig configs/evb-rk3328_defconfig configs/evb-rk3399_defconfig configs/evb-rv1108_defconfig configs/fennec-rk3288_defconfig configs/firefly-rk3288_defconfig configs/firefly-rk3399_defconfig configs/gva-rk3229_defconfig configs/kylin-rk3036_defconfig configs/lion-rk3368_defconfig configs/miqi-rk3288_defconfig configs/nokia_rx51_defconfig configs/odroid_rk3566_defconfig configs/odroid_rk3568_defconfig configs/odroid_rk3588s_defconfig configs/phycore-rk3288_defconfig configs/popmetal-rk3288_defconfig configs/puma-rk3399_defconfig configs/px30_defconfig configs/px30-tb_defconfig configs/rk1806_defconfig configs/rk1808_defconfig configs/rk3036_defconfig configs/rk3126_defconfig configs/rk3128_defconfig configs/rk3128x_defconfig configs/rk322x_defconfig configs/rk3288_defconfig configs/rk3308-aarch32-amp_defconfig configs/rk3308-aarch32_defconfig configs/rk3308_defconfig configs/rk3326-aarch32_defconfig configs/rk3326_defconfig configs/rk3328_defconfig configs/rk3368_defconfig configs/rk3399_defconfig configs/rk3399pro_defconfig configs/rk3528_defconfig configs/rk3562_defconfig configs/rk3568_defconfig configs/rk3568-pcie-ep_defconfig configs/rk3568-spl-spi-nand_defconfig configs/rk3588_defconfig configs/rk3588-qnx_defconfig configs/rv1106_defconfig configs/rv1106-emmc-tb_defconfig configs/rv1106-emmc-tb-nofastae_defconfig configs/rv1106-spi-nand-tb-nofastae_defconfig configs/rv1106-spi-nor_defconfig configs/rv1106-spi-nor-tb_defconfig configs/rv1106-spi-nor-tb-nofastae_defconfig configs/rv1126_defconfig configs/rv1126-spi-nor-tiny_defconfig configs/rv1126-spl-slc-nand_defconfig configs/rv1126-spl-spi-nand_defconfig configs/sheep-rk3368_defconfig configs/tinker-rk3288_defconfig configs/vyasa-rk3288_defconfig
++ SUPPORT_LIST='configs/android6.0-rk3399_defconfig
+configs/dserve_dsrv9703c_defconfig
+configs/evb-aarch32-rk3308_defconfig
+configs/evb-px30_defconfig
+configs/evb-rk3036_defconfig
+configs/evb-rk3066_defconfig
+configs/evb-rk3128_defconfig
+configs/evb-rk3229_defconfig
+configs/evb-rk3288_defconfig
+configs/evb-rk3288-rk1608_defconfig
+configs/evb-rk3308_defconfig
+configs/evb-rk3326_defconfig
+configs/evb-rk3328_defconfig
+configs/evb-rk3399_defconfig
+configs/evb-rv1108_defconfig
+configs/fennec-rk3288_defconfig
+configs/firefly-rk3288_defconfig
+configs/firefly-rk3399_defconfig
+configs/gva-rk3229_defconfig
+configs/kylin-rk3036_defconfig
+configs/lion-rk3368_defconfig
+configs/miqi-rk3288_defconfig
+configs/nokia_rx51_defconfig
+configs/odroid_rk3566_defconfig
+configs/odroid_rk3568_defconfig
+configs/odroid_rk3588s_defconfig
+configs/phycore-rk3288_defconfig
+configs/popmetal-rk3288_defconfig
+configs/puma-rk3399_defconfig
+configs/px30_defconfig
+configs/px30-tb_defconfig
+configs/rk1806_defconfig
+configs/rk1808_defconfig
+configs/rk3036_defconfig
+configs/rk3126_defconfig
+configs/rk3128_defconfig
+configs/rk3128x_defconfig
+configs/rk322x_defconfig
+configs/rk3288_defconfig
+configs/rk3308-aarch32-amp_defconfig
+configs/rk3308-aarch32_defconfig
+configs/rk3308_defconfig
+configs/rk3326-aarch32_defconfig
+configs/rk3326_defconfig
+configs/rk3328_defconfig
+configs/rk3368_defconfig
+configs/rk3399_defconfig
+configs/rk3399pro_defconfig
+configs/rk3528_defconfig
+configs/rk3562_defconfig
+configs/rk3568_defconfig
+configs/rk3568-pcie-ep_defconfig
+configs/rk3568-spl-spi-nand_defconfig
+configs/rk3588_defconfig
+configs/rk3588-qnx_defconfig
+configs/rv1106_defconfig
+configs/rv1106-emmc-tb_defconfig
+configs/rv1106-emmc-tb-nofastae_defconfig
+configs/rv1106-spi-nand-tb-nofastae_defconfig
+configs/rv1106-spi-nor_defconfig
+configs/rv1106-spi-nor-tb_defconfig
+configs/rv1106-spi-nor-tb-nofastae_defconfig
+configs/rv1126_defconfig
+configs/rv1126-spi-nor-tiny_defconfig
+configs/rv1126-spl-slc-nand_defconfig
+configs/rv1126-spl-spi-nand_defconfig
+configs/sheep-rk3368_defconfig
+configs/tinker-rk3288_defconfig
+configs/vyasa-rk3288_defconfig'
++ CMD_ARGS=itb
++ RKBIN_TOOLS=../rkbin/tools
++ grep -q '^CONFIG_ARM32=y' .config
++++ which aarch64-linux-gnu-gcc
+++ dirname /usr/bin/aarch64-linux-gnu-gcc
++ CROSS_COMPILE_ARM64=/usr/bin/bin
++ RKCHIP=
++ RKCHIP_LABEL=
++ RKCHIP_LOADER=
++ RKCHIP_TRUST=
++ INI_TRUST=
++ INI_LOADER=
++ RKBIN=
++ TOOLCHAIN=
++ TOOLCHAIN_NM=
++ TOOLCHAIN_OBJDUMP=
++ TOOLCHAIN_ADDR2LINE=
++ PLAT_RSA=
++ PLAT_SHA=
++ PLAT_UBOOT_SIZE=
++ PLAT_TRUST_SIZE=
++ PLAT_TYPE=RKFW
+++ pwd
++ SRCTREE=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk
++ SCRIPT_FIT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/fit.sh
++ SCRIPT_ATF=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/atf.sh
++ SCRIPT_TOS=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/tos.sh
++ SCRIPT_SPL=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/spl.sh
++ SCRIPT_UBOOT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/uboot.sh
++ SCRIPT_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/loader.sh
++ SCRIPT_DECOMP=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/decomp.sh
++ SCRIPT_CHECKCONFIG=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/check-rkconfig.sh
++ CC_FILE=.cc
++ REP_DIR=./rep
++ process_args itb /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ '[' 2 -gt 0 ']'
++ case $1 in
++ '[' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini == spl -o /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini == tpl ']'
++ shift 1
++ '[' 1 -gt 0 ']'
++ case $1 in
++ '[' '!' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini ']'
++ grep -q CODE471_OPTION /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ grep -Eq 'BL31_OPTION|TOS' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ ARG_INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ shift 1
++ '[' 0 -gt 0 ']'
++ '[' '!' -f .config ']'
++ prepare
++ '[' -d ../rkbin/tools ']'
++++ dirname ../rkbin/tools
+++ cd ../rkbin
+++ pwd
++ absolute_path=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ RKBIN=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ grep -Eq '^CONFIG_ARM64=y|^CONFIG_ARM64_BOOT_AARCH32=y' .config
++ ARM64_TRUSTZONE=y
++ grep -q '^CONFIG_ROCKCHIP_FIT_IMAGE_PACK=y' .config
++ PLAT_TYPE=FIT
++ select_toolchain
++ '[' '' '!=' y ']'
++ '[' -f .cc ']'
++ grep -q '^CONFIG_ARM64=y' .config
++++ dirname /usr/bin/bin
+++ cd /usr/bin
+++ pwd
++ CROSS_COMPILE_ARM64=/usr/bin/aarch64-linux-gnu-
++ grep -q '^CONFIG_ARM64=y' .config
++ TOOLCHAIN=/usr/bin/aarch64-linux-gnu-
++ TOOLCHAIN_NM=/usr/bin/aarch64-linux-gnu-nm
++ TOOLCHAIN_OBJDUMP=/usr/bin/aarch64-linux-gnu-objdump
++ TOOLCHAIN_ADDR2LINE=/usr/bin/aarch64-linux-gnu-addr2line
+++ which /usr/bin/aarch64-linux-gnu-gcc
++ '[' '!' /usr/bin/aarch64-linux-gnu-gcc ']'
++ '[' '' == y ']'
++ select_chip_info
++ CHIP_PATTERN='^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}'
+++ egrep -o '^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}' .config
++ RKCHIP=CONFIG_ROCKCHIP_RK3588
++ RKCHIP=RK3588
++ RKCHIP_LOADER=RK3588
++ RKCHIP_TRUST=RK3588
+++ filt_val CONFIG_CHIP_NAME .config
+++ sed -n /CONFIG_CHIP_NAME=/s/CONFIG_CHIP_NAME=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ RKCHIP_LABEL=
++ '[' -z '' ']'
++ RKCHIP_LABEL=RK3588
++ fixup_platform_configure
+++ filt_val CONFIG_UBOOT_SIZE_KB .config
+++ sed -n /CONFIG_UBOOT_SIZE_KB=/s/CONFIG_UBOOT_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ U_KB=
+++ filt_val CONFIG_UBOOT_NUM .config
+++ sed -n /CONFIG_UBOOT_NUM=/s/CONFIG_UBOOT_NUM=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ U_NUM=
+++ filt_val CONFIG_TRUST_SIZE_KB .config
+++ sed -n /CONFIG_TRUST_SIZE_KB=/s/CONFIG_TRUST_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_KB=
+++ filt_val CONFIG_TRUST_NUM .config
+++ sed -n /CONFIG_TRUST_NUM=/s/CONFIG_TRUST_NUM=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_NUM=
+++ filt_val CONFIG_TRUST_SHA_MODE .config
+++ sed -n /CONFIG_TRUST_SHA_MODE=/s/CONFIG_TRUST_SHA_MODE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ SHA=
+++ filt_val CONFIG_TRUST_RSA_MODE .config
+++ tr -d '\r'
+++ sed -n /CONFIG_TRUST_RSA_MODE=/s/CONFIG_TRUST_RSA_MODE=//p .config
+++ tr -d '"'
++ RSA=
++ PLAT_UBOOT_SIZE='--size  '
++ PLAT_TRUST_SIZE='--size  '
++ PLAT_SHA='--sha '
++ PLAT_RSA='--rsa '
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ select_ini_file
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM1.ini
++ '[' y == y ']'
++ INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ filt_val CONFIG_LOADER_INI .config
+++ sed -n /CONFIG_LOADER_INI=/s/CONFIG_LOADER_INI=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ NAME=RK3588-ODROIDM2.ini
++ '[' '!' -z RK3588-ODROIDM2.ini ']'
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ filt_val CONFIG_TRUST_INI .config
+++ sed -n /CONFIG_TRUST_INI=/s/CONFIG_TRUST_INI=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ NAME=
++ '[' '!' -z '' ']'
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini ']'
++ INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ '[' '!' -z '' ']'
++ handle_args_late
++ ARG_LIST_FIT=' --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini'
++ sub_commands
++ [[ itb != --* ]]
++ CMD=itb
++ ARG=itb
++ '[' '' == tpl -o '' == spl ']'
++ ELF=u-boot
++ MAP=u-boot.map
++ SYM=u-boot.sym
++ case ${CMD} in
++ pack_uboot_itb_image
++ INI=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ '[' '!' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini ']'
++ '[' y == y ']'
+++ sed -n /_bl31_/s/PATH=//p /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d '\r'
++ BL31_ELF=bin/rk35/rk3588_bl31_v1.44.elf
+++ sed -n /_bl32_/s/PATH=//p /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d '\r'
++ BL32_BIN=bin/rk35/rk3588_bl32_v1.15.bin
++ rm bl31.elf tee.bin -rf
++ cp /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_bl31_v1.44.elf bl31.elf
++ grep BL32_OPTION -A 1 /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ grep SEC=1
+SEC=1
++ cp /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/bin/rk35/rk3588_bl32_v1.15.bin tee.bin
+++ grep ADDR=
+++ grep BL32_OPTION -A 3 /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ awk -F = '{ printf $2 }'
+++ tr -d '\r'
++ TEE_OFFSET=0x08400000
++ TEE_ARG='-t 0x08400000'
++ (( i=0 ))
++ (( i<5 ))
++ MCU_BIN=mcu0.bin
++ MCU_IDX=MCU0
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' 0 -eq 0 ']'
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '!' -z ']'
+++ awk -F , '/MCU0=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ MCU_BIN=mcu1.bin
++ MCU_IDX=MCU1
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' 1 -eq 0 ']'
+++ tr -d ' '
+++ awk -F , '/MCU1=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ MCU_BIN=mcu2.bin
++ MCU_IDX=MCU2
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' 2 -eq 0 ']'
+++ awk -F , '/MCU2=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ MCU_BIN=mcu3.bin
++ MCU_IDX=MCU3
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' 3 -eq 0 ']'
+++ awk -F , '/MCU3=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ MCU_BIN=mcu4.bin
++ MCU_IDX=MCU4
+++ awk -F, '/MCU=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' 4 -eq 0 ']'
+++ awk -F , '/MCU4=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ (( i=0 ))
++ (( i<5 ))
++ LOAD_BIN=load0.bin
++ LOAD_IDX=LOAD0
+++ awk -F , '/LOAD0=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ LOAD_BIN=load1.bin
++ LOAD_IDX=LOAD1
+++ awk -F , '/LOAD1=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ LOAD_BIN=load2.bin
++ LOAD_IDX=LOAD2
+++ awk -F , '/LOAD2=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ LOAD_BIN=load3.bin
++ LOAD_IDX=LOAD3
+++ awk -F , '/LOAD3=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
++ LOAD_BIN=load4.bin
++ LOAD_IDX=LOAD4
+++ awk -F , '/LOAD4=/  { printf $3 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
++ ENABLED=
++ '[' '' == enabled -o '' == okay ']'
++ (( i++ ))
++ (( i<5 ))
+++ awk -F, '/COMPRESSION=/  { printf $1 }' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ tr -d ' '
+++ cut -c 13-
++ COMPRESSION=
++ '[' '!' -z '' -a '' '!=' none ']'
++ '[' -d ./rep ']'
+++ filt_val CONFIG_SPL_FIT_SOURCE .config
+++ sed -n /CONFIG_SPL_FIT_SOURCE=/s/CONFIG_SPL_FIT_SOURCE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ SPL_FIT_SOURCE=
++ '[' '!' -z ']'
+++ filt_val CONFIG_SPL_FIT_GENERATOR .config
+++ sed -n /CONFIG_SPL_FIT_GENERATOR=/s/CONFIG_SPL_FIT_GENERATOR=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ SPL_FIT_GENERATOR=arch/arm/mach-rockchip/make_fit_atf.sh
++ [[ arch/arm/mach-rockchip/make_fit_atf.sh == *.py ]]
++ arch/arm/mach-rockchip/make_fit_atf.sh -t 0x08400000
++ ./tools/mkimage -f u-boot.its -E u-boot.itb
++ echo 'pack u-boot.itb okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini'
+pack u-boot.itb okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ echo
+
++ exit 0
++ check_its u-boot.its
++ cat u-boot.its
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo /bin /bin.usr-is-merged /boot /cdrom /dev /etc /home /lib /lib32 /lib64 /lib.usr-is-merged /libx32 /lost+found /media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv /swap.img /sys /tmp /usr /var
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo api arch bl31_0x00040000.bin bl31_0x000f0000.bin bl31_0xff100000.bin bl31.elf board build.log cmd common config.mk configs disk doc Documentation drivers dts env examples fit fs idblock.bin include Kbuild Kconfig lib Licenses MAINTAINERS Makefile make.sh net post PREUPLOAD.cfg README rkbin scripts snapshot.commit spl System.map tee.bin test tools tpl u-boot u-boot.bin u-boot.cfg u-boot.cfg.configs u-boot.dtb u-boot-dtb.bin u-boot-dtb.img u-boot.img u-boot.itb u-boot.its u-boot.lds u-boot.map u-boot-nodtb.bin u-boot.srec u-boot.sym usb_update.txt Copyright '(C)' 2020 Rockchip Electronic Co.,Ltd
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo api arch bl31_0x00040000.bin bl31_0x000f0000.bin bl31_0xff100000.bin bl31.elf board build.log cmd common config.mk configs disk doc Documentation drivers dts env examples fit fs idblock.bin include Kbuild Kconfig lib Licenses MAINTAINERS Makefile make.sh net post PREUPLOAD.cfg README rkbin scripts snapshot.commit spl System.map tee.bin test tools tpl u-boot u-boot.bin u-boot.cfg u-boot.cfg.configs u-boot.dtb u-boot-dtb.bin u-boot-dtb.img u-boot.img u-boot.itb u-boot.its u-boot.lds u-boot.map u-boot-nodtb.bin u-boot.srec u-boot.sym usb_update.txt
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo api arch bl31_0x00040000.bin bl31_0x000f0000.bin bl31_0xff100000.bin bl31.elf board build.log cmd common config.mk configs disk doc Documentation drivers dts env examples fit fs idblock.bin include Kbuild Kconfig lib Licenses MAINTAINERS Makefile make.sh net post PREUPLOAD.cfg README rkbin scripts snapshot.commit spl System.map tee.bin test tools tpl u-boot u-boot.bin u-boot.cfg u-boot.cfg.configs u-boot.dtb u-boot-dtb.bin u-boot-dtb.img u-boot.img u-boot.itb u-boot.its u-boot.lds u-boot.map u-boot-nodtb.bin u-boot.srec u-boot.sym usb_update.txt Simple U-boot fit source file containing ATF/OP-TEE/U-Boot/dtb/MCU
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo api/ arch/ board/ cmd/ common/ configs/ disk/ doc/ Documentation/ drivers/ dts/ env/ examples/ fit/ fs/ include/ lib/ Licenses/ net/ post/ rkbin/ scripts/ spl/ test/ tools/ tpl/
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '/dts-v1/;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo / '{'
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"FIT' Image with 'ATF/OP-TEE/U-Boot/MCU";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '#address-cells' = '<1>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo images '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo uboot '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"U-Boot";'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("u-boot-nodtb.bin");'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=u-boot-nodtb.bin
++ '[' '!' -f u-boot-nodtb.bin ']'
++ read line
+++ echo type = '"standalone";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo os = '"U-Boot";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo compression = '"none";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo load = '<0x00200000>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo atf-1 '{'
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"ARM' Trusted 'Firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("./bl31_0x00040000.bin");'
+++ awk -F '"' '{ printf $2 }'
+++ sed -n /incbin/p
+++ tr -d ' '
++ file=./bl31_0x00040000.bin
++ '[' '!' -f ./bl31_0x00040000.bin ']'
++ read line
+++ echo type = '"firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo os = '"arm-trusted-firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo compression = '"none";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo load = '<0x00040000>;'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo atf-2 '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"ARM' Trusted 'Firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("./bl31_0xff100000.bin");'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=./bl31_0xff100000.bin
++ '[' '!' -f ./bl31_0xff100000.bin ']'
++ read line
+++ echo type = '"firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo os = '"arm-trusted-firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo compression = '"none";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo load = '<0xff100000>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ awk -F '"' '{ printf $2 }'
+++ sed -n /incbin/p
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo atf-3 '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"ARM' Trusted 'Firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("./bl31_0x000f0000.bin");'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=./bl31_0x000f0000.bin
++ '[' '!' -f ./bl31_0x000f0000.bin ']'
++ read line
+++ echo type = '"firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo os = '"arm-trusted-firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo compression = '"none";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo load = '<0x000f0000>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo optee '{'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"OP-TEE";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("tee.bin");'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=tee.bin
++ '[' '!' -f tee.bin ']'
++ read line
+++ echo type = '"firmware";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo os = '"op-tee";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo compression = '"none";'
+++ awk -F '"' '{ printf $2 }'
+++ sed -n /incbin/p
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo load = '<0x8400000>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ awk -F '"' '{ printf $2 }'
+++ sed -n /incbin/p
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo fdt '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo description = '"U-Boot' 'dtb";'
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo data = '/incbin/("./u-boot.dtb");'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=./u-boot.dtb
++ '[' '!' -f ./u-boot.dtb ']'
++ read line
+++ echo type = '"flat_dt";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo arch = '"arm64";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ sed -n /incbin/p
+++ echo compression = '"none";'
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo hash '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo configurations '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo default = '"conf";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo conf '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo description = '"rk3588s-odroid-m2";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo rollback-index = '<0x0>;'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo firmware = '"atf-1";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo loadables = '"uboot",' '"atf-2",' '"atf-3",' '"optee";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo fdt = '"fdt";'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo signature '{'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo algo = '"sha256,rsa2048";'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo key-name-hint = '"dev";'
+++ awk -F '"' '{ printf $2 }'
+++ sed -n /incbin/p
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo sign-images = '"firmware",' '"loadables",' '"fdt";'
+++ sed -n /incbin/p
+++ tr -d ' '
+++ awk -F '"' '{ printf $2 }'
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo '};'
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
+++ echo
+++ sed -n /incbin/p
+++ awk -F '"' '{ printf $2 }'
+++ tr -d ' '
++ file=
++ '[' '!' -f ']'
++ read line
++ '[' '' '!=' y ']'
++ ./tools/mkimage -f u-boot.its -E -p 0x1000 fit/uboot.itb -v 0
+FIT description: FIT Image with ATF/OP-TEE/U-Boot/MCU
+Created:         Sun Oct 26 00:40:43 2025
+ Image 0 (uboot)
+  Description:  U-Boot
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Standalone Program
+  Compression:  uncompressed
+  Data Size:    1269952 Bytes = 1240.19 KiB = 1.21 MiB
+  Architecture: AArch64
+  Load Address: 0x00200000
+  Entry Point:  unavailable
+  Hash algo:    sha256
+  Hash value:   d896d9d94968dfe0c0e1854adb21e6e34a64b0d1e837d7da183b4c02897e5332
+ Image 1 (atf-1)
+  Description:  ARM Trusted Firmware
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Firmware
+  Compression:  uncompressed
+  Data Size:    200124 Bytes = 195.43 KiB = 0.19 MiB
+  Architecture: AArch64
+  Load Address: 0x00040000
+  Hash algo:    sha256
+  Hash value:   2e8446f9694b589b5581484af3308507cbea18dbe4ff5cbd12ec307168883955
+ Image 2 (atf-2)
+  Description:  ARM Trusted Firmware
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Firmware
+  Compression:  uncompressed
+  Data Size:    36864 Bytes = 36.00 KiB = 0.04 MiB
+  Architecture: AArch64
+  Load Address: 0xff100000
+  Hash algo:    sha256
+  Hash value:   9f75e6ec37eb0f00d4c9e7737e99d7583b5ef5ef42daa1e0a622b469ba0894b6
+ Image 3 (atf-3)
+  Description:  ARM Trusted Firmware
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Firmware
+  Compression:  uncompressed
+  Data Size:    24576 Bytes = 24.00 KiB = 0.02 MiB
+  Architecture: AArch64
+  Load Address: 0x000f0000
+  Hash algo:    sha256
+  Hash value:   c80587de5084f2c5ad96078e235a728080e6fadbfdd182c756f4a5c7f859f8dd
+ Image 4 (optee)
+  Description:  OP-TEE
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Firmware
+  Compression:  uncompressed
+  Data Size:    465312 Bytes = 454.41 KiB = 0.44 MiB
+  Architecture: AArch64
+  Load Address: 0x08400000
+  Hash algo:    sha256
+  Hash value:   4b2d406bfcf3aaed41877fd2356ac694a808f6788e9ec2545742fd2911ef5d5d
+ Image 5 (fdt)
+  Description:  U-Boot dtb
+  Created:      Sun Oct 26 00:40:43 2025
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    8527 Bytes = 8.33 KiB = 0.01 MiB
+  Architecture: AArch64
+  Hash algo:    sha256
+  Hash value:   df66ddc4185624441b99b3c8b0e1d9c6d45be4715807c1a71603b71bf0c067ec
+ Default Configuration: 'conf'
+ Configuration 0 (conf)
+  Description:  rk3588s-odroid-m2
+  Kernel:       unavailable
+  Firmware:     atf-1
+  FDT:          fdt
+  Loadables:    uboot
+                atf-2
+                atf-3
+                optee
++ '[' '' == y ']'
++ ./make.sh loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ sed -n 'N;/processor/p' /proc/cpuinfo
+++ wc -l
++ JOB=144
+++ ls configs/android6.0-rk3399_defconfig configs/dserve_dsrv9703c_defconfig configs/evb-aarch32-rk3308_defconfig configs/evb-px30_defconfig configs/evb-rk3036_defconfig configs/evb-rk3066_defconfig configs/evb-rk3128_defconfig configs/evb-rk3229_defconfig configs/evb-rk3288_defconfig configs/evb-rk3288-rk1608_defconfig configs/evb-rk3308_defconfig configs/evb-rk3326_defconfig configs/evb-rk3328_defconfig configs/evb-rk3399_defconfig configs/evb-rv1108_defconfig configs/fennec-rk3288_defconfig configs/firefly-rk3288_defconfig configs/firefly-rk3399_defconfig configs/gva-rk3229_defconfig configs/kylin-rk3036_defconfig configs/lion-rk3368_defconfig configs/miqi-rk3288_defconfig configs/nokia_rx51_defconfig configs/odroid_rk3566_defconfig configs/odroid_rk3568_defconfig configs/odroid_rk3588s_defconfig configs/phycore-rk3288_defconfig configs/popmetal-rk3288_defconfig configs/puma-rk3399_defconfig configs/px30_defconfig configs/px30-tb_defconfig configs/rk1806_defconfig configs/rk1808_defconfig configs/rk3036_defconfig configs/rk3126_defconfig configs/rk3128_defconfig configs/rk3128x_defconfig configs/rk322x_defconfig configs/rk3288_defconfig configs/rk3308-aarch32-amp_defconfig configs/rk3308-aarch32_defconfig configs/rk3308_defconfig configs/rk3326-aarch32_defconfig configs/rk3326_defconfig configs/rk3328_defconfig configs/rk3368_defconfig configs/rk3399_defconfig configs/rk3399pro_defconfig configs/rk3528_defconfig configs/rk3562_defconfig configs/rk3568_defconfig configs/rk3568-pcie-ep_defconfig configs/rk3568-spl-spi-nand_defconfig configs/rk3588_defconfig configs/rk3588-qnx_defconfig configs/rv1106_defconfig configs/rv1106-emmc-tb_defconfig configs/rv1106-emmc-tb-nofastae_defconfig configs/rv1106-spi-nand-tb-nofastae_defconfig configs/rv1106-spi-nor_defconfig configs/rv1106-spi-nor-tb_defconfig configs/rv1106-spi-nor-tb-nofastae_defconfig configs/rv1126_defconfig configs/rv1126-spi-nor-tiny_defconfig configs/rv1126-spl-slc-nand_defconfig configs/rv1126-spl-spi-nand_defconfig configs/sheep-rk3368_defconfig configs/tinker-rk3288_defconfig configs/vyasa-rk3288_defconfig
++ SUPPORT_LIST='configs/android6.0-rk3399_defconfig
+configs/dserve_dsrv9703c_defconfig
+configs/evb-aarch32-rk3308_defconfig
+configs/evb-px30_defconfig
+configs/evb-rk3036_defconfig
+configs/evb-rk3066_defconfig
+configs/evb-rk3128_defconfig
+configs/evb-rk3229_defconfig
+configs/evb-rk3288_defconfig
+configs/evb-rk3288-rk1608_defconfig
+configs/evb-rk3308_defconfig
+configs/evb-rk3326_defconfig
+configs/evb-rk3328_defconfig
+configs/evb-rk3399_defconfig
+configs/evb-rv1108_defconfig
+configs/fennec-rk3288_defconfig
+configs/firefly-rk3288_defconfig
+configs/firefly-rk3399_defconfig
+configs/gva-rk3229_defconfig
+configs/kylin-rk3036_defconfig
+configs/lion-rk3368_defconfig
+configs/miqi-rk3288_defconfig
+configs/nokia_rx51_defconfig
+configs/odroid_rk3566_defconfig
+configs/odroid_rk3568_defconfig
+configs/odroid_rk3588s_defconfig
+configs/phycore-rk3288_defconfig
+configs/popmetal-rk3288_defconfig
+configs/puma-rk3399_defconfig
+configs/px30_defconfig
+configs/px30-tb_defconfig
+configs/rk1806_defconfig
+configs/rk1808_defconfig
+configs/rk3036_defconfig
+configs/rk3126_defconfig
+configs/rk3128_defconfig
+configs/rk3128x_defconfig
+configs/rk322x_defconfig
+configs/rk3288_defconfig
+configs/rk3308-aarch32-amp_defconfig
+configs/rk3308-aarch32_defconfig
+configs/rk3308_defconfig
+configs/rk3326-aarch32_defconfig
+configs/rk3326_defconfig
+configs/rk3328_defconfig
+configs/rk3368_defconfig
+configs/rk3399_defconfig
+configs/rk3399pro_defconfig
+configs/rk3528_defconfig
+configs/rk3562_defconfig
+configs/rk3568_defconfig
+configs/rk3568-pcie-ep_defconfig
+configs/rk3568-spl-spi-nand_defconfig
+configs/rk3588_defconfig
+configs/rk3588-qnx_defconfig
+configs/rv1106_defconfig
+configs/rv1106-emmc-tb_defconfig
+configs/rv1106-emmc-tb-nofastae_defconfig
+configs/rv1106-spi-nand-tb-nofastae_defconfig
+configs/rv1106-spi-nor_defconfig
+configs/rv1106-spi-nor-tb_defconfig
+configs/rv1106-spi-nor-tb-nofastae_defconfig
+configs/rv1126_defconfig
+configs/rv1126-spi-nor-tiny_defconfig
+configs/rv1126-spl-slc-nand_defconfig
+configs/rv1126-spl-spi-nand_defconfig
+configs/sheep-rk3368_defconfig
+configs/tinker-rk3288_defconfig
+configs/vyasa-rk3288_defconfig'
++ CMD_ARGS=loader
++ RKBIN_TOOLS=../rkbin/tools
++ grep -q '^CONFIG_ARM32=y' .config
++++ which aarch64-linux-gnu-gcc
+++ dirname /usr/bin/aarch64-linux-gnu-gcc
++ CROSS_COMPILE_ARM64=/usr/bin/bin
++ RKCHIP=
++ RKCHIP_LABEL=
++ RKCHIP_LOADER=
++ RKCHIP_TRUST=
++ INI_TRUST=
++ INI_LOADER=
++ RKBIN=
++ TOOLCHAIN=
++ TOOLCHAIN_NM=
++ TOOLCHAIN_OBJDUMP=
++ TOOLCHAIN_ADDR2LINE=
++ PLAT_RSA=
++ PLAT_SHA=
++ PLAT_UBOOT_SIZE=
++ PLAT_TRUST_SIZE=
++ PLAT_TYPE=RKFW
+++ pwd
++ SRCTREE=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk
++ SCRIPT_FIT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/fit.sh
++ SCRIPT_ATF=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/atf.sh
++ SCRIPT_TOS=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/tos.sh
++ SCRIPT_SPL=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/spl.sh
++ SCRIPT_UBOOT=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/uboot.sh
++ SCRIPT_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/loader.sh
++ SCRIPT_DECOMP=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/decomp.sh
++ SCRIPT_CHECKCONFIG=/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/check-rkconfig.sh
++ CC_FILE=.cc
++ REP_DIR=./rep
++ process_args loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ '[' 2 -gt 0 ']'
++ case $1 in
++ '[' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini == spl -o /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini == tpl ']'
++ shift 1
++ '[' 1 -gt 0 ']'
++ case $1 in
++ '[' '!' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
++ grep -q CODE471_OPTION /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ ARG_INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ shift 1
++ '[' 0 -gt 0 ']'
++ '[' '!' -f .config ']'
++ prepare
++ '[' -d ../rkbin/tools ']'
++++ dirname ../rkbin/tools
+++ cd ../rkbin
+++ pwd
++ absolute_path=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ RKBIN=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin
++ grep -Eq '^CONFIG_ARM64=y|^CONFIG_ARM64_BOOT_AARCH32=y' .config
++ ARM64_TRUSTZONE=y
++ grep -q '^CONFIG_ROCKCHIP_FIT_IMAGE_PACK=y' .config
++ PLAT_TYPE=FIT
++ select_toolchain
++ '[' '' '!=' y ']'
++ '[' -f .cc ']'
++ grep -q '^CONFIG_ARM64=y' .config
++++ dirname /usr/bin/bin
+++ cd /usr/bin
+++ pwd
++ CROSS_COMPILE_ARM64=/usr/bin/aarch64-linux-gnu-
++ grep -q '^CONFIG_ARM64=y' .config
++ TOOLCHAIN=/usr/bin/aarch64-linux-gnu-
++ TOOLCHAIN_NM=/usr/bin/aarch64-linux-gnu-nm
++ TOOLCHAIN_OBJDUMP=/usr/bin/aarch64-linux-gnu-objdump
++ TOOLCHAIN_ADDR2LINE=/usr/bin/aarch64-linux-gnu-addr2line
+++ which /usr/bin/aarch64-linux-gnu-gcc
++ '[' '!' /usr/bin/aarch64-linux-gnu-gcc ']'
++ '[' '' == y ']'
++ select_chip_info
++ CHIP_PATTERN='^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}'
+++ egrep -o '^CONFIG_ROCKCHIP_[R,P][X,V,K][0-9ESX]{1,5}' .config
++ RKCHIP=CONFIG_ROCKCHIP_RK3588
++ RKCHIP=RK3588
++ RKCHIP_LOADER=RK3588
++ RKCHIP_TRUST=RK3588
+++ filt_val CONFIG_CHIP_NAME .config
+++ sed -n /CONFIG_CHIP_NAME=/s/CONFIG_CHIP_NAME=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ RKCHIP_LABEL=
++ '[' -z '' ']'
++ RKCHIP_LABEL=RK3588
++ fixup_platform_configure
+++ filt_val CONFIG_UBOOT_SIZE_KB .config
+++ sed -n /CONFIG_UBOOT_SIZE_KB=/s/CONFIG_UBOOT_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ U_KB=
+++ filt_val CONFIG_UBOOT_NUM .config
+++ tr -d '\r'
+++ sed -n /CONFIG_UBOOT_NUM=/s/CONFIG_UBOOT_NUM=//p .config
+++ tr -d '"'
++ U_NUM=
+++ filt_val CONFIG_TRUST_SIZE_KB .config
+++ sed -n /CONFIG_TRUST_SIZE_KB=/s/CONFIG_TRUST_SIZE_KB=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_KB=
+++ filt_val CONFIG_TRUST_NUM .config
+++ sed -n /CONFIG_TRUST_NUM=/s/CONFIG_TRUST_NUM=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ T_NUM=
+++ filt_val CONFIG_TRUST_SHA_MODE .config
+++ sed -n /CONFIG_TRUST_SHA_MODE=/s/CONFIG_TRUST_SHA_MODE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ SHA=
+++ filt_val CONFIG_TRUST_RSA_MODE .config
+++ sed -n /CONFIG_TRUST_RSA_MODE=/s/CONFIG_TRUST_RSA_MODE=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ RSA=
++ PLAT_UBOOT_SIZE='--size  '
++ PLAT_TRUST_SIZE='--size  '
++ PLAT_SHA='--sha '
++ PLAT_RSA='--rsa '
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ select_ini_file
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM1.ini
++ '[' y == y ']'
++ INI_TRUST=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
+++ filt_val CONFIG_LOADER_INI .config
+++ sed -n /CONFIG_LOADER_INI=/s/CONFIG_LOADER_INI=//p .config
+++ tr -d '\r'
+++ tr -d '"'
++ NAME=RK3588-ODROIDM2.ini
++ '[' '!' -z RK3588-ODROIDM2.ini ']'
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ filt_val CONFIG_TRUST_INI .config
+++ tr -d '\r'
+++ sed -n /CONFIG_TRUST_INI=/s/CONFIG_TRUST_INI=//p .config
+++ tr -d '"'
++ NAME=
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
++ INI_LOADER=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ handle_args_late
++ ARG_LIST_FIT=' --ini-trust /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini --ini-loader /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini'
++ sub_commands
++ [[ loader != --* ]]
++ CMD=loader
++ ARG=loader
++ '[' '' == tpl -o '' == spl ']'
++ ELF=u-boot
++ MAP=u-boot.map
++ SYM=u-boot.sym
++ case ${CMD} in
++ pack_loader_image
++ rm -f '*loader*.bin' '*download*.bin' '*idblock*.img'
++ cd /home/dwagner/git/android/lineage/hardware/rockchip/rkbin
+++ filt_val '^PATH' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ sed -n '/^PATH=/s/^PATH=//p' /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ tr -d '\r'
+++ tr -d '"'
++ DEF_PATH=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/rk3588_spl_loader_v1.15.113.bin
+++ filt_val IDB_PATH /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ sed -n /IDB_PATH=/s/IDB_PATH=//p /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ tr -d '\r'
+++ tr -d '"'
++ IDB_PATH=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/
++ /home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/loader.sh --ini /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ '[' 2 -eq 0 ']'
++ '[' 2 -gt 0 ']'
++ case $1 in
++ INI=/home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ shift 2
++ '[' 0 -gt 0 ']'
++ '[' '!' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
+++ cat /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+++ wc -l
++ COUNT=34
++ '[' 34 -eq 1 ']'
++ ./tools/boot_merger /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
+********boot_merger ver 1.34********
+Info:Pack loader ok.
++ echo 'pack loader okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini'
+pack loader okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini
++ cd -
+/home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk
++ '[' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/rk3588_spl_loader_v1.15.113.bin ']'
++ mv /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/rk3588_spl_loader_v1.15.113.bin ./
++ '[' -f /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/ ']'
++ exit 0
++ rm -f u-boot.itb u-boot.img u-boot-dtb.img
++ mv u-boot.its fit
++ fit_gen_uboot_img
++ ITB=
++ '[' -z ']'
++ ITB=fit/uboot.itb
+++ sed -n /SPL_FIT_IMAGE_MULTIPLE/p .config
+++ awk -F = '{ print $2 }'
++ ITB_MAX_NUM=1
+++ sed -n /SPL_FIT_IMAGE_KB/p .config
+++ awk -F = '{ print $2 }'
++ ITB_MAX_KB=2048
++ ITB_MAX_BS=2097152
+++ ls -l fit/uboot.itb
+++ awk '{ print $5 }'
++ ITB_BS=2011136
++ '[' 2011136 -gt 2097152 ']'
++ rm -f uboot.img
++ (( i = 0 ))
++ (( i < 1 ))
++ cat fit/uboot.itb
++ truncate -s %2048K uboot.img
++ (( i++ ))
++ (( i < 1 ))
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
++ fit_gen_loader
++ grep -Eq '^CONFIG_FIT_SIGNATURE=y' .config
++ echo
+
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini ']'
++ fit_msg_uboot
++ '[' '' '!=' y ']'
++ MSG_SIGN=no-signed
+++ fdtget -ti fit/uboot.itb / version
++ VERSION=0
++ '[' 0 '!=' '' ']'
++ MSG_VER=', version=0'
++ '[' '' == y ']'
++ echo 'Image(no-signed, version=0): uboot.img (FIT with uboot, trust...) is ready'
+Image(no-signed, version=0): uboot.img (FIT with uboot, trust...) is ready
++ fit_msg_recovery
++ '[' -z '' ']'
++ return
++ fit_msg_boot
++ '[' -z '' ']'
++ return
++ '[' '!' -z /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKBOOT/RK3588-ODROIDM2.ini ']'
++ fit_msg_loader
++ ls rk3588_spl_loader_v1.15.113.bin
+++ ls rk3588_spl_loader_v1.15.113.bin
++ LOADER=rk3588_spl_loader_v1.15.113.bin
++ ls '*idblock*.img'
++ grep -q '^CONFIG_FIT_SIGNATURE=y' .config
++ echo 'Image(no-signed): rk3588_spl_loader_v1.15.113.bin (with spl, ddr...) is ready'
+Image(no-signed): rk3588_spl_loader_v1.15.113.bin (with spl, ddr...) is ready
++ rm ./rep -rf
++ echo 'pack uboot.img okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini'
+pack uboot.img okay! Input: /home/dwagner/git/android/lineage/hardware/rockchip/rkbin/RKTRUST/RK3588TRUST.ini
++ finish
++ /home/dwagner/git/android/lineage/hardware/rockchip/uboot-hk/scripts/check-rkconfig.sh
++ echo
+
++ '[' odroid_rk3588s == '' ']'
++ echo 'Platform RK3588 is build OK, with new .config(make odroid_rk3588s_defconfig -j144)'
+Platform RK3588 is build OK, with new .config(make odroid_rk3588s_defconfig -j144)
++ echo /usr/bin/aarch64-linux-gnu-
+/usr/bin/aarch64-linux-gnu-
++ date
+Sun Oct 26 12:40:43 AM UTC 2025

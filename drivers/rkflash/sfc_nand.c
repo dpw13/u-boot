@@ -916,7 +916,7 @@ u32 sfc_nand_prog_page_raw(u8 cs, u32 addr, u32 *p_page_buf)
 
 	/*
 	 * At the moment of power lost or dev running in harsh environment, flash
-	 * maybe work in a unkonw state and result in bit flip, when this situation
+	 * maybe work in a unknown state and result in bit flip, when this situation
 	 * is detected by cache recheck, it's better to wait a second for a reliable
 	 * hardware environment to avoid abnormal data written to flash array.
 	 */

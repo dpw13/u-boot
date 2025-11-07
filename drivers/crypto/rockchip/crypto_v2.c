@@ -225,12 +225,13 @@ static int rk_crypto_do_enable_clk(struct udevice *dev, int enable)
 {
 	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
 	struct clk clk;
-	int i, ret;
+	int i, ret = 0;
 
 	for (i = 0; i < priv->nclocks; i++) {
 		ret = clk_get_by_index(dev, i, &clk);
 		if (ret < 0) {
-			printf("Failed to get clk index %d, ret=%d\n", i, ret);
+			pr_err("%s: %s Failed to get clk index %d, ret=%d\n",
+				dev->name, __func__, i, ret);
 			return ret;
 		}
 
@@ -239,8 +240,8 @@ static int rk_crypto_do_enable_clk(struct udevice *dev, int enable)
 		else
 			ret = clk_disable(&clk);
 		if (ret < 0 && ret != -ENOSYS) {
-			printf("Failed to enable(%d) clk(%ld): ret=%d\n",
-			       enable, clk.id, ret);
+			pr_err("%s: %s Failed to enable(%d) clk(%ld): ret=%d\n",
+			       dev->name, __func__, enable, clk.id, ret);
 			return ret;
 		}
 	}
@@ -379,6 +380,7 @@ static int rk_hash_init(void *hw_ctx, u32 algo)
 		break;
 	default:
 		ret = -EINVAL;
+		printf("Invalid algo 0x%x\n", algo);
 		goto exit;
 	}
 
@@ -577,8 +579,10 @@ static int rockchip_crypto_sha_init(struct udevice *dev, sha_context *ctx)
 
 	rk_crypto_enable_clk(dev);
 	ret = rk_hash_init(hash_ctx, ctx->algo);
-	if (ret)
+	if (ret) {
+		pr_err("%s: rk_hash_init failed with ret=%d\n", dev->name, ret);
 		rk_crypto_disable_clk(dev);
+	}
 
 	return ret;
 }
@@ -623,8 +627,8 @@ static int rockchip_crypto_sha_final(struct udevice *dev,
 	nbits = crypto_algo_nbits(ctx->algo);
 
 	if (priv->length != ctx->length) {
-		printf("total length(0x%08x) != init length(0x%08x)!\n",
-		       priv->length, ctx->length);
+		pr_err("%s: total length(0x%08x) != init length(0x%08x)!\n",
+		       dev->name, priv->length, ctx->length);
 		ret = -EIO;
 		goto exit;
 	}
@@ -943,7 +947,7 @@ static int hw_cipher_crypt(const u8 *in, u8 *out, u64 len,
 	int ret = -1;
 
 	if (rk_mode == RK_MODE_CTS && len <= AES_BLOCK_SIZE) {
-		printf("CTS mode length %u < 16Byte\n", (u32)len);
+		pr_err("hw_cipher_crypt: CTS mode length %u < 16Byte\n", (u32)len);
 		return -EINVAL;
 	}
 
@@ -1471,7 +1475,7 @@ static int rockchip_crypto_ofdata_to_platdata(struct udevice *dev)
 
 	/* if there is no clocks in dts, just skip it */
 	if (!dev_read_prop(dev, "clocks", &len)) {
-		printf("Can't find \"clocks\" property\n");
+		pr_err("%s: Can't find \"clocks\" property\n", dev->name);
 		return 0;
 	}
 
@@ -1483,7 +1487,7 @@ static int rockchip_crypto_ofdata_to_platdata(struct udevice *dev)
 	priv->nclocks = len / (2 * sizeof(u32));
 	if (dev_read_u32_array(dev, "clocks", (u32 *)priv->clocks,
 			       priv->nclocks)) {
-		printf("Can't read \"clocks\" property\n");
+		pr_err("%s: Can't read \"clocks\" property\n", dev->name);
 		ret = -EINVAL;
 		goto exit;
 	}
@@ -1497,7 +1501,7 @@ static int rockchip_crypto_ofdata_to_platdata(struct udevice *dev)
 		priv->freq_nclocks = len / sizeof(u32);
 		if (dev_read_u32_array(dev, "clock-frequency", priv->frequencies,
 				       priv->freq_nclocks)) {
-			printf("Can't read \"clock-frequency\" property\n");
+			pr_err("%s: Can't read \"clock-frequency\" property\n", dev->name);
 			ret = -EINVAL;
 			goto exit;
 		}
@@ -1526,18 +1530,19 @@ static int rk_crypto_set_clk(struct udevice *dev)
 
 	/* use "clock-frequency" props */
 	if (priv->freq_nclocks == 0)
-		return 0;
+		return clk_set_defaults(dev);
 
 	for (i = 0; i < priv->freq_nclocks; i++) {
 		ret = clk_get_by_index(dev, i, &clk);
 		if (ret < 0) {
-			printf("Failed to get clk index %d, ret=%d\n", i, ret);
+			pr_err("%s: %s Failed to get clk index %d, ret=%d\n",
+				dev->name, __func__, i, ret);
 			return ret;
 		}
 		ret = clk_set_rate(&clk, priv->frequencies[i]);
 		if (ret < 0) {
-			printf("%s: Failed to set clk(%ld): ret=%d\n",
-			       __func__, clk.id, ret);
+			pr_err("%s: %s Failed to set clk(%ld): ret=%d\n",
+			       dev->name, __func__, clk.id, ret);
 			return ret;
 		}
 	}
