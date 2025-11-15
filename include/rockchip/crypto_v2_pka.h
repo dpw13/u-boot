@@ -9,8 +9,6 @@
 #include <rockchip/crypto_v2.h>
 #include <rockchip/crypto_v2_util.h>
 
-#define CRYPTO_BASE crypto_base
-
 #define MPA_USE_ALLOC	1
 
 struct mpa_num {
@@ -111,13 +109,6 @@ typedef u32 RK_PKA_NP_t[RK_PKA_BARRETT_IN_WORDS];
 #define RK_PKA_OPCODE_OPERAND_1_IMMED_POS	23
 #define RK_PKA_OPCODE_LEN_POS			24
 #define RK_PKA_OPCODE_OPERATION_ID_POS		27
-
-/* PKA data registers base address
- *should be always zero since it's the offset
- * from the start of the PKA memory and not from the HOST memory
- */
-#define RK_PKA_DATA_REGS_BASE_ADDR		(CRYPTO_BASE + CRYPTO_SRAM_BASE)
-#define RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR	(CRYPTO_BASE + CRYPTO_SRAM_BASE)
 
 /* Machine Opcodes definitions (according to HW CRS ) */
 #define   RK_PKA_MIN_OPCODE			0x00

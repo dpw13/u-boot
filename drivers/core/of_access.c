@@ -20,6 +20,8 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
+//#define DEBUG
+
 #include <common.h>
 #include <linux/libfdt.h>
 #include <dm/of_access.h>
@@ -652,8 +654,8 @@ static int __of_parse_phandle_with_args(const struct device_node *np,
 			if (cells_name || cur_index == index) {
 				node = of_find_node_by_phandle(phandle);
 				if (!node) {
-					debug("%s: could not find phandle\n",
-					      np->full_name);
+					debug("%s: could not find phandle 0x%x in %s\n",
+					      np->full_name, phandle, list_name);
 					goto err;
 				}
 			}

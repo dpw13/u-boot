@@ -745,9 +745,9 @@ int fdtdec_parse_phandle_with_args(const void *blob, int src_node,
 				node = fdt_node_offset_by_phandle(blob,
 								  phandle);
 				if (!node) {
-					debug("%s: could not find phandle\n",
+					debug("%s: could not find phandle 0x%x in %s\n",
 					      fdt_get_name(blob, src_node,
-							   NULL));
+							   NULL), phandle, list_name);
 					goto err;
 				}
 			}

@@ -51,11 +51,7 @@ struct rk_crypto_soc_data {
 
 struct rockchip_crypto_priv {
 	fdt_addr_t			reg;
-	u32				frequency;
-	char				*clocks;
-	u32				*frequencies;
-	u32				nclocks;
-	u32				freq_nclocks;
+	struct clk_bulk	clks;
 	u32				length;
 	struct rk_hash_ctx		*hw_ctx;
 	struct rk_crypto_soc_data	*soc_data;
@@ -117,6 +113,9 @@ struct rockchip_crypto_priv {
 #define IS_AE_MODE(rk_mode) ((rk_mode) == RK_MODE_CCM || \
 			     (rk_mode) == RK_MODE_GCM)
 
+/* 
+ * TODO: port crypto_v2_pka to use a proper reg offset and remove this.
+ */
 fdt_addr_t crypto_base;
 
 static inline void word2byte_be(u32 word, u8 *ch)
@@ -221,42 +220,18 @@ static inline void get_tag_from_reg(u32 chn, u8 *tag, u32 tag_len)
 		word2byte_be(crypto_read(chn_base), tag + 4 * i);
 }
 
-static int rk_crypto_do_enable_clk(struct udevice *dev, int enable)
-{
-	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
-	struct clk clk;
-	int i, ret = 0;
-
-	for (i = 0; i < priv->nclocks; i++) {
-		ret = clk_get_by_index(dev, i, &clk);
-		if (ret < 0) {
-			pr_err("%s: %s Failed to get clk index %d, ret=%d\n",
-				dev->name, __func__, i, ret);
-			return ret;
-		}
-
-		if (enable)
-			ret = clk_enable(&clk);
-		else
-			ret = clk_disable(&clk);
-		if (ret < 0 && ret != -ENOSYS) {
-			pr_err("%s: %s Failed to enable(%d) clk(%ld): ret=%d\n",
-			       dev->name, __func__, enable, clk.id, ret);
-			return ret;
-		}
-	}
-
-	return 0;
-}
-
 static int rk_crypto_enable_clk(struct udevice *dev)
 {
-	return rk_crypto_do_enable_clk(dev, 1);
+	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
+
+	return clk_enable_bulk(&priv->clks);
 }
 
 static int rk_crypto_disable_clk(struct udevice *dev)
 {
-	return rk_crypto_do_enable_clk(dev, 0);
+	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
+
+	return clk_disable_bulk(&priv->clks);
 }
 
 static u32 crypto_v3_dynamic_cap(void)
@@ -1454,7 +1429,7 @@ static const struct dm_crypto_ops rockchip_crypto_ops = {
 };
 
 /*
- * Only use "clocks" to parse crypto clock id and use rockchip_get_clk().
+ * Clocks handled automatically by clk-uclass.
  * Because we always add crypto node in U-Boot dts, when kernel dtb enabled :
  *
  *   1. There is cru phandle mismatch between U-Boot and kernel dtb;
@@ -1463,7 +1438,7 @@ static const struct dm_crypto_ops rockchip_crypto_ops = {
 static int rockchip_crypto_ofdata_to_platdata(struct udevice *dev)
 {
 	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
-	int len, ret = -EINVAL;
+	int ret;
 
 	memset(priv, 0x00, sizeof(*priv));
 
@@ -1473,78 +1448,10 @@ static int rockchip_crypto_ofdata_to_platdata(struct udevice *dev)
 
 	crypto_base = priv->reg;
 
-	/* if there is no clocks in dts, just skip it */
-	if (!dev_read_prop(dev, "clocks", &len)) {
-		pr_err("%s: Can't find \"clocks\" property\n", dev->name);
-		return 0;
-	}
-
-	memset(priv, 0x00, sizeof(*priv));
-	priv->clocks = malloc(len);
-	if (!priv->clocks)
-		return -ENOMEM;
-
-	priv->nclocks = len / (2 * sizeof(u32));
-	if (dev_read_u32_array(dev, "clocks", (u32 *)priv->clocks,
-			       priv->nclocks)) {
-		pr_err("%s: Can't read \"clocks\" property\n", dev->name);
-		ret = -EINVAL;
-		goto exit;
-	}
-
-	if (dev_read_prop(dev, "clock-frequency", &len)) {
-		priv->frequencies = malloc(len);
-		if (!priv->frequencies) {
-			ret = -ENOMEM;
-			goto exit;
-		}
-		priv->freq_nclocks = len / sizeof(u32);
-		if (dev_read_u32_array(dev, "clock-frequency", priv->frequencies,
-				       priv->freq_nclocks)) {
-			pr_err("%s: Can't read \"clock-frequency\" property\n", dev->name);
-			ret = -EINVAL;
-			goto exit;
-		}
-	}
-
-	return 0;
-exit:
-	if (priv->clocks)
-		free(priv->clocks);
-
-	if (priv->frequencies)
-		free(priv->frequencies);
-
-	return ret;
-}
-
-static int rk_crypto_set_clk(struct udevice *dev)
-{
-	struct rockchip_crypto_priv *priv = dev_get_priv(dev);
-	struct clk clk;
-	int i, ret;
-
-	/* use standard "assigned-clock-rates" props */
-	if (dev_read_size(dev, "assigned-clock-rates") > 0)
-		return clk_set_defaults(dev);
-
-	/* use "clock-frequency" props */
-	if (priv->freq_nclocks == 0)
-		return clk_set_defaults(dev);
-
-	for (i = 0; i < priv->freq_nclocks; i++) {
-		ret = clk_get_by_index(dev, i, &clk);
-		if (ret < 0) {
-			pr_err("%s: %s Failed to get clk index %d, ret=%d\n",
-				dev->name, __func__, i, ret);
-			return ret;
-		}
-		ret = clk_set_rate(&clk, priv->frequencies[i]);
-		if (ret < 0) {
-			pr_err("%s: %s Failed to set clk(%ld): ret=%d\n",
-			       dev->name, __func__, clk.id, ret);
-			return ret;
-		}
+	ret = clk_get_bulk(dev, &priv->clks);
+	if (ret < 0) {
+		pr_err("%s: %s Failed to get clk bulk, ret=%d\n",
+			dev->name, __func__, ret);
 	}
 
 	return 0;
@@ -1568,15 +1475,34 @@ static int rockchip_crypto_probe(struct udevice *dev)
 	if (!priv->hw_ctx)
 		return -ENOMEM;
 
-	ret = rk_crypto_set_clk(dev);
-	if (ret)
+	/* If we encounter an error while setting clock frequencies and enabling
+	 * them, we still want to attempt an IP reset in case the issue is just
+	 * a misconfigured DTS.
+	 */
+	ret = clk_set_defaults(dev);
+	if (ret != 0) {
+		pr_err("%s: clk_set_defaults ret=%d", dev->name, ret);
+	}
+
+	ret = rk_crypto_enable_clk(dev);
+	if (ret != 0) {
+		pr_err("%s: rk_crypto_enable_clk ret=%d", dev->name, ret);
+	}
+
+	ret = hw_crypto_reset();
+	if (ret != 0) {
+		/* Failing the reset means the hardware is non-functional in our current
+		 * configuration, so that is actually fatal.
+		 */
+		pr_err("%s: hw_crypto_reset ret=%d", dev->name, ret);
+		rk_crypto_disable_clk(dev);
 		return ret;
+	}
 
-	rk_crypto_enable_clk(dev);
-
-	hw_crypto_reset();
-
-	rk_crypto_disable_clk(dev);
+	ret = rk_crypto_disable_clk(dev);
+	if (ret != 0) {
+		pr_err("%s: rk_crypto_disable_clk ret=%d", dev->name, ret);
+	}
 
 	return 0;
 }

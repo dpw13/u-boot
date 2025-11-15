@@ -7,7 +7,7 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#define DEBUG
+//#define DEBUG
 
 #include <common.h>
 #include <clk.h>
@@ -66,23 +66,24 @@ static int clk_get_by_indexed_prop(struct udevice *dev, const char *prop_name,
 	struct udevice *dev_clk;
 	const struct clk_ops *ops;
 
-	debug("%s(dev=%p, index=%d, clk=%p)\n", __func__, dev, index, clk);
-
 	assert(clk);
+	assert(dev);
+
+	debug("%s(dev=%s, index=%d, clk=%p)\n", __func__, dev_read_name(dev), index, clk);
 	clk->dev = NULL;
 
 	ret = dev_read_phandle_with_args(dev, prop_name, "#clock-cells", 0,
 					 index, &args);
 	if (ret) {
-		debug("%s: fdtdec_parse_phandle_with_args failed: err=%d\n",
-		      __func__, ret);
+		debug("%s: %s fdtdec_parse_phandle_with_args failed: err=%d\n",
+		      dev_read_name(dev), __func__, ret);
 		return ret;
 	}
 
 	ret = uclass_get_device_by_ofnode(UCLASS_CLK, args.node, &dev_clk);
 	if (ret) {
-		debug("%s: uclass_get_device_by_of_offset failed: err=%d\n",
-		      __func__, ret);
+		debug("%s: %s uclass_get_device_by_of_offset failed: err=%d\n",
+		      dev_read_name(dev), __func__, ret);
 		return ret;
 	}
 
@@ -114,8 +115,10 @@ int clk_get_bulk(struct udevice *dev, struct clk_bulk *bulk)
 	bulk->count = 0;
 
 	count = dev_count_phandle_with_args(dev, "clocks", "#clock-cells");
-	if (!count)
-		return 0;
+	if (count <= 0)
+		return count;
+
+	debug("%s %s: found %d clocks\n", dev->name, __func__, count);
 
 	bulk->clks = devm_kcalloc(dev, count, sizeof(struct clk), GFP_KERNEL);
 	if (!bulk->clks)
@@ -134,8 +137,8 @@ int clk_get_bulk(struct udevice *dev, struct clk_bulk *bulk)
 bulk_get_err:
 	err = clk_release_all(bulk->clks, bulk->count);
 	if (err)
-		debug("%s: could release all clocks for %p\n",
-		      __func__, dev);
+		debug("%s %s: could release all clocks for %p\n",
+		      dev->name, __func__, dev);
 
 	return ret;
 }
@@ -262,7 +265,7 @@ int clk_get_by_name(struct udevice *dev, const char *name, struct clk *clk)
 {
 	int index;
 
-	debug("%s(dev=%p, name=%s, clk=%p)\n", __func__, dev, name, clk);
+	debug("%s(dev=%s, name=%s, clk=%p)\n", __func__, dev_read_name(dev), name, clk);
 	clk->dev = NULL;
 
 	index = dev_read_stringlist_search(dev, "clock-names", name);
@@ -303,7 +306,7 @@ int clk_request(struct udevice *dev, struct clk *clk)
 {
 	const struct clk_ops *ops = clk_dev_ops(dev);
 
-	debug("%s(dev=%p, clk=%p)\n", __func__, dev, clk);
+	debug("%s(dev=%s, clk=%p)\n", __func__, dev_read_name(dev), clk);
 
 	clk->dev = dev;
 
@@ -444,7 +447,7 @@ int clks_probe(void)
 	uclass_foreach_dev(dev, uc) {
 		ret = device_probe(dev);
 		if (ret)
-			printf("%s - probe failed: %d\n", dev->name, ret);
+			printf("%s - probe failed: %d\n", dev_read_name(dev), ret);
 	}
 
 	return 0;

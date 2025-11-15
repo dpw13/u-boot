@@ -190,7 +190,7 @@ void rk_pka_hw_load_value2pka_mem(u32 addr, u32 val)
 {
 	u32 *vaddr;
 
-	vaddr = (u32 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+	vaddr = (u32 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
 	*vaddr = val;
@@ -201,7 +201,7 @@ void rk_pka_hw_load_block2pka_mem(u32 addr, u32 *ptr,
 				  u32 size_words)
 {
 	u8 *vaddr =
-		(u8 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+		(u8 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
@@ -213,7 +213,7 @@ void rk_pka_hw_reverse_load_block2pka_mem(u32 addr, u32 *ptr,
 					  u32 size_words)
 {
 	u8 *vaddr =
-		(u8 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+		(u8 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
@@ -224,7 +224,7 @@ void rk_pka_hw_reverse_load_block2pka_mem(u32 addr, u32 *ptr,
 void rk_pka_hw_clear_pka_mem(u32 addr, u32 size_words)
 {
 	u8 *vaddr =
-		(u8 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+		(u8 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
@@ -236,7 +236,7 @@ void rk_pka_hw_read_value_from_pka_mem(u32 addr, u32 *val)
 {
 	u32 *vaddr;
 
-	vaddr = (u32 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+	vaddr = (u32 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
 	*val = *vaddr;
@@ -247,7 +247,7 @@ void rk_pka_hw_read_block_from_pka_mem(u32 addr, u32 *ptr,
 				       u32 size_words)
 {
 	u8 *vaddr =
-		(u8 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+		(u8 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
@@ -259,7 +259,7 @@ void rk_pka_hw_reverse_read_block_from_pka_mem(u32 addr, u32 *ptr,
 					       u32 size_words)
 {
 	u8 *vaddr =
-		(u8 *)((addr) + RK_PKA_DATA_REGS_MEMORY_OFFSET_ADDR);
+		(u8 *)(addr + crypto_base + CRYPTO_SRAM_BASE);
 
 	rk_pka_ram_ctrl_disable();
 	rk_pka_wait_on_ram_ready();
