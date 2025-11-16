@@ -29,9 +29,10 @@ jobs:
       - name: Build
         run: |
           ./make.sh ${{ matrix.target }}
-      - uses: actions/upload-artifact@v4
+      - name: Upload artifacts
+        uses: https://github.com/christopherHX/gitea-upload-artifact@v4
         with:
-          name: bootloaders-${{ matrix.platform }}
+          name: bootloaders-${{ matrix.target }}
           path: |
             idblock.bin
             uboot.img
