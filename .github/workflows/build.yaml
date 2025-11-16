@@ -1,0 +1,31 @@
+name: Build Uboot
+on: [push]
+
+jobs:
+  rockchip-build:
+    strategy:
+      matrix:
+        target: [odroid_rk3588s]
+    runs-on: ubuntu-latest
+    container:
+      image: docker.smokeybear.duckdns.org/komodo/aarch64-build:trixie
+    steps:
+      - name: Set git credentials
+        run: |
+          git config --global credential.helper store
+          echo "https://$GIT_API_USERNAME:$GIT_API_KEY@git.smokeybear.duckdns.org" >> ~/.git-credentials
+        env:
+          GIT_API_USERNAME: ${{ secrets.GIT_API_USERNAME }}
+          GIT_API_KEY: ${{ secrets.GIT_API_KEY }}
+      - name: Install SSH keys
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan truenas.localdomain >> ~/.ssh/known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Check out repository code
+        uses: actions/checkout@v5
+        with:
+          submodules: true
+      - name: Build
+        run: |
+          ./make.sh ${{ matrix.target }}
