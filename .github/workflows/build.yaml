@@ -5,7 +5,7 @@ jobs:
   rockchip-build:
     strategy:
       matrix:
-        target: [odroid_rk3588s]
+        target: [odroid_rk3588s_car]
     runs-on: ubuntu-latest
     container:
       image: docker.smokeybear.duckdns.org/komodo/aarch64-build:trixie
