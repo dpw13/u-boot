@@ -9,6 +9,7 @@ ENV \
 RUN apt-get update && apt-get install -y \
     nodejs \
     git \
+    device-tree-compiler \
     build-essential \
     crossbuild-essential-arm64 \
     && apt-get clean \

@@ -29,3 +29,12 @@ jobs:
       - name: Build
         run: |
           ./make.sh ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bootloaders-${{ matrix.platform }}
+          path: |
+            idblock.bin
+            uboot.img
+            u-boot.sym
+            u-boot.cfg
+            build.log
