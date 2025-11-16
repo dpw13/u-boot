@@ -12,7 +12,7 @@ SUPPORT_LIST=`ls configs/*[r,p][x,v,k][0-9][0-9]*_defconfig`
 CMD_ARGS=$1
 
 ########################################### User can modify #############################################
-RKBIN_TOOLS=../rkbin/tools
+RKBIN_TOOLS=rkbin/tools
 if grep -q '^CONFIG_ARM32=y' .config ; then
 	CROSS_COMPILE_ARM32=$(dirname $(which arm-linux-gnueabihf-gcc))/bin
 else
