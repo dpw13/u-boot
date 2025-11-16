@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     git \
     device-tree-compiler \
+    bc \
+    python3 \
     build-essential \
     crossbuild-essential-arm64 \
     && apt-get clean \
